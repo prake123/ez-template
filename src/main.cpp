@@ -8,8 +8,8 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {18, -16, 1},     // Left Chassis Ports (negative port will reverse it!)
-    {19, -14, 12},  // Right Chassis Ports (negative port will reverse it!)
+    {- 16, 11, -1},     // Left Chassis Ports (negative port will reverse it!)
+    {14, -15, 12},  // Right Chassis Ports (negative port will reverse it!)
 
     7,      // IMU Port
     3.375,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -32,6 +32,7 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
+  pros::lcd::print(1, "654G");
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
@@ -59,20 +60,12 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       
-      {"red awp", red_awp},
-      {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
-      {"Drive and Turn\n\nSlow down during drive", wait_until_change_speed},
-      {"Swing Turn\n\nSwing in an 'S' curve", swing_example},
-      {"Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining},
-      {"Combine all 3 movements", combining_movements},
-      {"Interference\n\nAfter driving forward, robot performs differently if interfered or not", interfered_example},
-      {"Simple Odom\n\nThis is the same as the drive example, but it uses odom instead!", odom_drive_example},
-      {"Pure Pursuit\n\nGo to (0, 30) and pass through (6, 10) on the way.  Come back to (0, 0)", odom_pure_pursuit_example},
-      {"Pure Pursuit Wait Until\n\nGo to (24, 24) but start running an intake once the robot passes (12, 24)", odom_pure_pursuit_wait_until_example},
-      {"Boomerang\n\nGo to (0, 24, 45) then come back to (0, 0, 0)", odom_boomerang_example},
-      {"Boomerang Pure Pursuit\n\nGo to (0, 24, 45) on the way to (24, 24) then come back to (0, 0, 0)", odom_boomerang_injected_pure_pursuit_example},
-      {"Measure Offsets\n\nThis will turn the robot a bunch of times and calculate your offsets for your tracking wheels.", measure_offsets},
-  });
+      {"matchRight", matchRight},
+      {"skills auton", autonSkills},
+      {"matchLeft", matchLeft}
+         
+
+    });
 
   // Initialize chassis and auton selector
   chassis.initialize();
@@ -241,21 +234,77 @@ void ez_template_extras() {
  */
 void opcontrol() {
   // This is preference to what you like to drive on
-  chassis.drive_brake_set(MOTOR_BRAKE_COAST);
-
+  chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
+  
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
 
+  // pros::lcd::print(0, "Left B RPM: %.2f", bottomLeft.get_actual_velocity()); 
+  // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
+  // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_velocity());
+  // pros::lcd::print(3, "Right B RPM: %.2f", bottomRight.get_actual_velocity());
+  // pros::lcd::print(4, "Right M RPM: %.2f", middleRight.get_actual_velocity());
+  // pros::lcd::print(5, "Right T RPM: %.2f", topRight.get_actual_velocity());
+
+
     //chassis.opcontrol_tank();  // Tank control
-     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+     //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
-    // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
+    //chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
     // . . .
     // Put more user control code here!
     // . . .
+      wings.button_toggle(master.get_digital((DIGITAL_L1)));
+      pros::delay(24);
+      
+      scraper.button_toggle(master.get_digital(DIGITAL_Y));
+      pros::delay(24);
+
+
+      if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
+        leftMotors.move(0);
+        rightMotors.move(0);
+      }
+      else{
+         chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+      }
+
+
+      if(wings.get()){
+        master.rumble("-");
+      }
+
+
+    if (master.get_digital(DIGITAL_R1)) {
+      bottomIntake.move(127);
+      topIntake.move(-127);
+      middleIntake.move(127);
+    } 
+    else if (master.get_digital(DIGITAL_R2)) {
+      bottomIntake.move(127);
+      topIntake.move(127);
+      middleIntake.move(127);
+    } 
+    else if (master.get_digital(DIGITAL_L2)){
+      bottomIntake.move(-127);
+      topIntake.move(127); 
+      middleIntake.move(-127);
+    }
+    else {
+      bottomIntake.move(0);
+      topIntake.move(0);
+      middleIntake.move(0);
+    }
+      if(master.get_digital(DIGITAL_B)){
+        leftMotors.move(127);
+        rightMotors.move(127);
+      }
+      
+
+
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
