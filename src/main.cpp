@@ -8,8 +8,8 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {- 16, 11, -1},     // Left Chassis Ports (negative port will reverse it!)
-    {14, -15, 12},  // Right Chassis Ports (negative port will reverse it!)
+    { -1, 16, -15},     // Left Chassis Ports (negative port will reverse it!  -1)
+    {14, -11, 12},  // Right Chassis Ports (negative port will reverse it!)
 
     7,      // IMU Port
     3.375,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -33,7 +33,7 @@ void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
   pros::lcd::print(1, "654G");
-
+  optical.set_led_pwm(100);
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
   // Look at your horizontal tracking wheel and decide if it's in front of the midline of your robot or behind it
@@ -48,8 +48,7 @@ void initialize() {
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
   chassis.opcontrol_drive_activebrake_set(2.0);   // Sets the active brake kP. We recommend ~2.  0 will disable.
-  chassis.opcontrol_curve_default_set(0.0, 0.0);  // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
-
+  chassis.opcontrol_curve_default_set(0.0, 4.0);  // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
   // Set the drive to your own constants from autons.cpp!
   default_constants();
 
@@ -60,9 +59,11 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       
-      {"matchRight", matchRight},
+    {"turn example", turn_example},  
+    {"matchRight", matchRight},
       {"skills auton", autonSkills},
-      {"matchLeft", matchLeft}
+      {"matchLeft", matchLeft},
+   
          
 
     });
@@ -235,7 +236,7 @@ void ez_template_extras() {
 void opcontrol() {
   // This is preference to what you like to drive on
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
-  
+  bool last_wings = false;
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
@@ -245,7 +246,7 @@ void opcontrol() {
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_velocity());
   // pros::lcd::print(3, "Right B RPM: %.2f", bottomRight.get_actual_velocity());
   // pros::lcd::print(4, "Right M RPM: %.2f", middleRight.get_actual_velocity());
-  // pros::lcd::print(5, "Right T RPM: %.2f", topRight.get_actual_velocity());
+   pros::lcd::print(5, "Right T RPM: %.2f", optical.get_hue());
 
 
     //chassis.opcontrol_tank();  // Tank control
@@ -263,7 +264,18 @@ void opcontrol() {
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24);
 
+      hood.button_toggle(master.get_digital(DIGITAL_L1));
+      pros::delay(24);
+    // if(wings.get() && !last_wings){//controller rumble when wings close
+    //   master.rumble("-");
+    // }
+    // last_wings = wings.get();
 
+
+      
+      doublePark.button_toggle(master.get_digital(DIGITAL_DOWN));
+      pros::delay(24);
+      
       if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
         leftMotors.move(0);
         rightMotors.move(0);
@@ -273,20 +285,17 @@ void opcontrol() {
       }
 
 
-      if(wings.get()){
-        master.rumble("-");
-      }
+      
 
 
     if (master.get_digital(DIGITAL_R1)) {
-      bottomIntake.move(127);
-      topIntake.move(-127);
-      middleIntake.move(127);
+      // bottomIntake.move(127);
+      // topIntake.move(-127);
+      // middleIntake.move(127);
+      longScoring();
     } 
     else if (master.get_digital(DIGITAL_R2)) {
-      bottomIntake.move(127);
-      topIntake.move(127);
-      middleIntake.move(127);
+      middleScoring();
     } 
     else if (master.get_digital(DIGITAL_L2)){
       bottomIntake.move(-127);
@@ -298,11 +307,9 @@ void opcontrol() {
       topIntake.move(0);
       middleIntake.move(0);
     }
-      if(master.get_digital(DIGITAL_B)){
-        leftMotors.move(127);
-        rightMotors.move(127);
-      }
       
+      redColorSort();
+      //blueColorSort();
 
 
 

@@ -21,3 +21,7 @@ extern Drive chassis;
  inline pros::Motor bottomRight(14);
  inline pros::Motor middleRight(-15);
  inline pros::Motor topRight(12);
+ inline ez::Piston doublePark('F'); 
+ inline pros ::Optical optical ( 6 );
+ inline ez::Piston hood('b');
+

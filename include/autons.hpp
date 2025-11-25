@@ -3,7 +3,13 @@
 void default_constants();
 
 
-void red_awp();
 void autonSkills();
-void matchRed();
+void matchRight();
 void testAuton();
+void matchLeft();
+void blueColorSort();
+void redColorSort();
+void drive_example();
+void turn_example();
+void storing();
+void longScoring();
