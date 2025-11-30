@@ -20,8 +20,8 @@ ez::Drive chassis(
 //  - you should get positive values on the encoders going FORWARD and RIGHT
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
-// ez::tracking_wheel horiz_tracker(8, 2.75, 4.0);  // This tracking wheel is perpendicular to the drive wheels
-// ez::tracking_wheel vert_tracker(9, 2.75, 4.0);   // This tracking wheel is parallel to the drive wheels
+ //ez::tracking_wheel horiz_tracker(6, 2.00, 4.0);  // This tracking wheel is perpendicular to the drive wheels
+ ez::tracking_wheel vert_tracker(17, 2.00, 3.5);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -59,7 +59,7 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       
-    {"turn example", turn_example},  
+    {"AWP", AWP},  
     {"matchRight", matchRight},
       {"skills auton", autonSkills},
       {"matchLeft", matchLeft},
@@ -235,17 +235,23 @@ void ez_template_extras() {
  */
 void opcontrol() {
   // This is preference to what you like to drive on
+  bool active = false;
+  bool longScore = false;
+  bool colorSort = true;
+  bool middle = false;
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
   bool last_wings = false;
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
+     
+
 
   // pros::lcd::print(0, "Left B RPM: %.2f", bottomLeft.get_actual_velocity()); 
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_velocity());
   // pros::lcd::print(3, "Right B RPM: %.2f", bottomRight.get_actual_velocity());
-  // pros::lcd::print(4, "Right M RPM: %.2f", middleRight.get_actual_velocity());
+   pros::lcd::print(4, "%d", distancesensor.get());
    pros::lcd::print(5, "Right T RPM: %.2f", optical.get_hue());
 
 
@@ -258,22 +264,26 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-      wings.button_toggle(master.get_digital((DIGITAL_L1)));
+      wings.button_toggle(master.get_digital((DIGITAL_B)));
       pros::delay(24);
       
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24);
 
-      hood.button_toggle(master.get_digital(DIGITAL_L1));
-      pros::delay(24);
-    // if(wings.get() && !last_wings){//controller rumble when wings close
+      doublePark.button_toggle(master.get_digital(DIGITAL_LEFT));
+    
+    if(master.get_digital_new_press(DIGITAL_LEFT)){
+      active = false;
+    }
+    if(longScore){
+      longScoring();
+    }
+      // if(wings.get() && !last_wings){//controller rumble when wings close
     //   master.rumble("-");
-    // }
-    // last_wings = wings.get();
+    // }    // last_wings = wings.get();
 
 
       
-      doublePark.button_toggle(master.get_digital(DIGITAL_DOWN));
       pros::delay(24);
       
       if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
@@ -286,31 +296,55 @@ void opcontrol() {
 
 
       
-
+    if (master.get_digital_new_press(DIGITAL_DOWN)) {
+      active = true;
+    }
+    // else if (!master.get_digital_new_press(DIGITAL_UP)) {
+    //   active = false;
+    // }
 
     if (master.get_digital(DIGITAL_R1)) {
-      // bottomIntake.move(127);
-      // topIntake.move(-127);
-      // middleIntake.move(127);
-      longScoring();
+      bottomIntake.move(127);
+      topIntake.move(-127);
+      middleIntake.move(127);
+      wings.set(false);
+      colorSort = true;
+      middle = false;
+      //longScore = true;
     } 
     else if (master.get_digital(DIGITAL_R2)) {
-      middleScoring();
+      bottomIntake.move(127);
+      topIntake.move(127);
+      middleIntake.move(127);
+      wings.set(false);
+      colorSort = true;
+      middle= true;
     } 
     else if (master.get_digital(DIGITAL_L2)){
       bottomIntake.move(-127);
       topIntake.move(127); 
       middleIntake.move(-127);
     }
+    else if(master.get_digital(DIGITAL_L1)){
+      bottomIntake.move(127);
+      topIntake.move(-127); 
+      middleIntake.move(127);
+      wings.set(true);
+      colorSort = false;
+    }
+    else if (active) {
+    runDoublePark(active);
+}  
     else {
       bottomIntake.move(0);
       topIntake.move(0);
       middleIntake.move(0);
     }
       
-      redColorSort();
+    if(colorSort){
+      redColorSort(middle);
       //blueColorSort();
-
+  }
 
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
