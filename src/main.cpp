@@ -234,13 +234,13 @@ void ez_template_extras() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-  // This is preference to what you like to drive on
-  bool active = false;
-  bool longScore = false;
-  bool colorSort = true;
-  bool middle = false;
+  
+  
+  bool active = false; //double park
+  bool storingActive = false; //storing macro
+  bool colorSort = true; //color sort toggle
+  bool middle = false; //color sort middle decision
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
-  bool last_wings = false;
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
@@ -251,8 +251,8 @@ void opcontrol() {
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_velocity());
   // pros::lcd::print(3, "Right B RPM: %.2f", bottomRight.get_actual_velocity());
-   pros::lcd::print(4, "%d", distancesensor.get());
-   pros::lcd::print(5, "Right T RPM: %.2f", optical.get_hue());
+   pros::lcd::print(4, "%d", distancesensor.get()); //returns distance sensor value in mm
+   pros::lcd::print(5, "Right T RPM: %.2f", optical.get_hue()); //returns color sensor hue value (0-360)
 
 
     //chassis.opcontrol_tank();  // Tank control
@@ -261,24 +261,20 @@ void opcontrol() {
     //chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
-    // . . .
-    // Put more user control code here!
-    // . . .
+    
       wings.button_toggle(master.get_digital((DIGITAL_B)));
-      pros::delay(24);
+      pros::delay(24); //wings and hood toggle
       
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
-      pros::delay(24);
+      pros::delay(24); //scraper toggle
 
       doublePark.button_toggle(master.get_digital(DIGITAL_LEFT));
     
     if(master.get_digital_new_press(DIGITAL_LEFT)){
       active = false;
-    }
-    if(longScore){
-      longScoring();
-    }
-      // if(wings.get() && !last_wings){//controller rumble when wings close
+    } //toggles double park off and undos double park
+    
+      // if(wings.get() && !last_wings){  //controller rumble when wings close
     //   master.rumble("-");
     // }    // last_wings = wings.get();
 
@@ -288,7 +284,7 @@ void opcontrol() {
       
       if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
         leftMotors.move(0);
-        rightMotors.move(0);
+        rightMotors.move(0);//stops unnecessary coasting
       }
       else{
          chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
@@ -296,27 +292,32 @@ void opcontrol() {
 
 
       
-    if (master.get_digital_new_press(DIGITAL_DOWN)) {
+    if (master.get_digital_new_press(DIGITAL_DOWN)) {//double park active set
       active = true;
     }
     // else if (!master.get_digital_new_press(DIGITAL_UP)) {
     //   active = false;
     // }
 
-    if (master.get_digital(DIGITAL_R1)) {
+    if (master.get_digital(DIGITAL_R1)) { //long macro
+      wings.set(false);
+      topIntake.move(40);
+      pros::delay(90);//outake before scoring
       bottomIntake.move(127);
       topIntake.move(-127);
       middleIntake.move(127);
-      wings.set(false);
       colorSort = true;
       middle = false;
       //longScore = true;
     } 
-    else if (master.get_digital(DIGITAL_R2)) {
+    else if (master.get_digital(DIGITAL_R2)) { //middle macro
+      wings.set(false);
+      topIntake.move(-70);
+      middleIntake.move(-70);
+      pros::delay(90);//outake before scoring
       bottomIntake.move(127);
       topIntake.move(127);
       middleIntake.move(127);
-      wings.set(false);
       colorSort = true;
       middle= true;
     } 
@@ -326,10 +327,11 @@ void opcontrol() {
       middleIntake.move(-127);
     }
     else if(master.get_digital(DIGITAL_L1)){
-      bottomIntake.move(127);
-      topIntake.move(-127); 
-      middleIntake.move(127);
-      wings.set(true);
+      // bottomIntake.move(127);
+      // topIntake.move(-127); 
+      // middleIntake.move(127);
+      // wings.set(true);
+      storingActive = !storingActive;
       colorSort = false;
     }
     else if (active) {
@@ -341,12 +343,21 @@ void opcontrol() {
       middleIntake.move(0);
     }
       
-    if(colorSort){
-      redColorSort(middle);
+    // if(colorSort){ broken color sort rip
+    //   redColorSort(middle);
       //blueColorSort();
   }
-
-
-    pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+  if(storingActive){//storing toggle when pressing L1
+    bottomIntake.move(127);
+    topIntake.move(-127); 
+    middleIntake.move(127);
+    wings.set(true);
   }
+  else if(!storingActive){
+    bottomIntake.move(0);
+    topIntake.move(0); 
+    middleIntake.move(0);
+  }
+    pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+  
 }
