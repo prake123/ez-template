@@ -235,7 +235,7 @@ void ez_template_extras() {
  */
 void opcontrol() {
   
-  
+  int count = 0;
   bool active = false; //double park
   bool storingActive = false; //storing macro
   bool colorSort = true; //color sort toggle
@@ -244,13 +244,13 @@ void opcontrol() {
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
-     
+     count = 0;
 
 
   // pros::lcd::print(0, "Left B RPM: %.2f", bottomLeft.get_actual_velocity()); 
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_velocity());
-  // pros::lcd::print(3, "Right B RPM: %.2f", bottomRight.get_actual_velocity());
+  pros::lcd::print(6, "Lebron");
    pros::lcd::print(4, "%d", distancesensor.get()); //returns distance sensor value in mm
    pros::lcd::print(5, "Right T RPM: %.2f", optical.get_hue()); //returns color sensor hue value (0-360)
 
@@ -298,24 +298,27 @@ void opcontrol() {
     // else if (!master.get_digital_new_press(DIGITAL_UP)) {
     //   active = false;
     // }
-
-    if (master.get_digital(DIGITAL_R1)) { //long macro
+    if(master.get_digital_new_press(DIGITAL_R1)){
       wings.set(false);
-      topIntake.move(40);
+      topIntake.move(70);
+      middleIntake.move(-70);
       pros::delay(90);//outake before scoring
+    }
+    if (master.get_digital(DIGITAL_R1)) { //long macro
+       
       bottomIntake.move(127);
       topIntake.move(-127);
-      middleIntake.move(127);
+            middleIntake.move(127);
       colorSort = true;
       middle = false;
       //longScore = true;
     } 
     else if (master.get_digital(DIGITAL_R2)) { //middle macro
-      wings.set(false);
-      topIntake.move(-70);
-      middleIntake.move(-70);
-      pros::delay(90);//outake before scoring
-      bottomIntake.move(127);
+       wings.set(false);
+      // topIntake.move(-70);
+      // middleIntake.move(-70);
+      // pros::delay(90);//outake before scoring
+      bottomIntake.move(-127);
       topIntake.move(127);
       middleIntake.move(127);
       colorSort = true;
@@ -327,12 +330,18 @@ void opcontrol() {
       middleIntake.move(-127);
     }
     else if(master.get_digital(DIGITAL_L1)){
-      // bottomIntake.move(127);
-      // topIntake.move(-127); 
-      // middleIntake.move(127);
-      // wings.set(true);
-      storingActive = !storingActive;
-      colorSort = false;
+      bottomIntake.move(127);
+      topIntake.move(-127); 
+      middleIntake.move(127);
+      wings.set(true);
+    //   storingActive = !storingActive;
+    //   colorSort = false;
+    //   if(storingActive){//storing toggle when pressing L1
+    // bottomIntake.move(127);
+    // topIntake.move(127); 
+    // middleIntake.move(-127);
+    // wings.set(true);
+  //}
     }
     else if (active) {
     runDoublePark(active);
@@ -349,15 +358,22 @@ void opcontrol() {
   }
   if(storingActive){//storing toggle when pressing L1
     bottomIntake.move(127);
-    topIntake.move(-127); 
-    middleIntake.move(127);
+    topIntake.move(127); 
+    middleIntake.move(-127);
     wings.set(true);
   }
   else if(!storingActive){
     bottomIntake.move(0);
     topIntake.move(0); 
     middleIntake.move(0);
+    std::cout<<("lebron");
   }
+  
+  
+
+    
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   
+
 }
+ 

@@ -589,7 +589,7 @@ void testAuton() {
   // chassis.pid_turn_set(90_deg, 50);
   // chassis.pid_wait();
 }
-void matchrightOdom() {
+void matchrightOdom() { // 
   wings.set(true);
 chassis.pid_odom_set({0_in, 8_in}, 90);
 chassis.pid_wait();
@@ -652,7 +652,7 @@ void AWP() {
   // topIntake.move(-127);
   // middleIntake.move(127);
   // bottomIntake.move(127);
-  chassis.pid_odom_set({{14_in, 31_in}, fwd, 90});
+  chassis.pid_odom_set({{14_in, 31_in, 90_deg}, fwd, 90});
   pros::delay(200);
   chassis.pid_wait();
   chassis.pid_odom_set({{-20_in, 31_in}, rev, 90});
@@ -677,7 +677,7 @@ void AWP() {
   pros::delay(500);
   wings.set(true);
   chassis.pid_wait();
-  chassis.pid_odom_set({{4_in, -62_in}, fwd, 90});
+  chassis.pid_odom_set({{0_in, -62_in, 90_deg}, fwd, 90});
   scraper.set(true);
   chassis.pid_wait();
   chassis.pid_odom_set({{14_in, -62_in}, fwd, 90});
