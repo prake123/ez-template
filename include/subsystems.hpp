@@ -9,9 +9,9 @@ extern Drive chassis;
 
  inline pros::Motor topIntake(-9);
 // inline pros::adi::DigitalIn limit_switch('A');
- inline ez::Piston wings('H'); 
+ inline ez::Piston wings('G'); 
  inline pros::Motor bottomIntake(4);
- inline ez::Piston scraper('G');
+ inline ez::Piston scraper('H');
  inline pros::Motor middleIntake(-15);
  inline pros::MotorGroup leftMotors({-1, 16, -15});
  inline pros::MotorGroup rightMotors({14, -11, 12});
@@ -22,6 +22,6 @@ extern Drive chassis;
  inline pros::Motor middleRight(-15);
  inline pros::Motor topRight(12);
  inline ez::Piston  doublePark('F');  
- inline pros ::Optical optical ( 8 );
+ inline pros ::Optical optical (8);
  inline pros::Distance distancesensor(6);
 
