@@ -81,6 +81,7 @@ void initialize() {
  */
 void disabled() {
   // . . .
+  doublePark.set(true);
 }
 
 /**
@@ -94,6 +95,7 @@ void disabled() {
  */
 void competition_initialize() {
   // . . .
+  doublePark.set(false);
 }
 
 /**
