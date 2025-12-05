@@ -8,10 +8,10 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    { -1, 16, -15},     // Left Chassis Ports (negative port will reverse it!  -1)
-    {14, -11, 12},  // Right Chassis Ports (negative port will reverse it!)
+    { -16, 12, -2},     // Left Chassis Ports (negative port will reverse it!  -1)
+    {13, -14, 11},  // Right Chassis Ports (negative port will reverse it!)
 
-    7,      // IMU Port
+    17,      // IMU Port
     3.375,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     450);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
@@ -81,7 +81,6 @@ void initialize() {
  */
 void disabled() {
   // . . .
-  doublePark.set(true);
 }
 
 /**
@@ -95,7 +94,6 @@ void disabled() {
  */
 void competition_initialize() {
   // . . .
-  doublePark.set(false);
 }
 
 /**
@@ -205,13 +203,13 @@ void ez_template_extras() {
       chassis.pid_tuner_toggle();
 
     // Trigger the selected autonomous routine
-    if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
+    if (master.get_digital(DIGITAL_X) && master.get_digital(DIGITAL_RIGHT)) {
       pros::motor_brake_mode_e_t preference = chassis.drive_brake_get();
       autonomous();
       chassis.drive_brake_set(preference);
     }
 
-    // Allow PID Tuner to iterate
+    // Allow PID Tuner t-o iterate
     chassis.pid_tuner_iterate();
   }
 
@@ -251,7 +249,7 @@ void opcontrol() {
 
   // pros::lcd::print(0, "Left B RPM: %.2f", bottomLeft.get_actual_velocity()); 
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
-  // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_velocity());
+  // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_vel+-9885ocity());
   pros::lcd::print(6, "Lebron");
    pros::lcd::print(4, "%d", distancesensor.get()); //returns distance sensor value in mm
    pros::lcd::print(5, "Right T RPM: %.2f", optical.get_hue()); //returns color sensor hue value (0-360)
@@ -264,16 +262,17 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
     
-      wings.button_toggle(master.get_digital((DIGITAL_B)));
+      wings.button_toggle(master.get_digital((DIGITAL_Y)));
       pros::delay(24); //wings and hood toggle
       
-      scraper.button_toggle(master.get_digital(DIGITAL_Y));
+      scraper.button_toggle(master.get_digital(DIGITAL_B));
       pros::delay(24); //scraper toggle
 
       doublePark.button_toggle(master.get_digital(DIGITAL_LEFT));
     
     if(master.get_digital_new_press(DIGITAL_LEFT)){
       active = false;
+      doublePark.set(false);
     } //toggles double park off and undos double park
     
       // if(wings.get() && !last_wings){  //controller rumble when wings close
@@ -320,7 +319,7 @@ void opcontrol() {
       // topIntake.move(-70);
       // middleIntake.move(-70);
       // pros::delay(90);//outake before scoring
-      bottomIntake.move(-127);
+      bottomIntake.move(127);
       topIntake.move(127);
       middleIntake.move(127);
       colorSort = true;
