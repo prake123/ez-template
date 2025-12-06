@@ -645,36 +645,45 @@ pros::delay(3000);
 
 }
 void AWP() {
+  
   doublePark.set(false);
-  chassis.pid_odom_set({{0_in, 31_in, 90_deg},fwd, 90});
+  chassis.pid_odom_set({{0_in, 35_in},fwd, 100});
   scraper.set(true);
   wings.set(true);
   chassis.pid_wait();
+  chassis.pid_turn_relative_set(87,90);
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  chassis.pid_odom_set({{14_in, 32_in}, fwd, 90});
   chassis.pid_wait();
-  pros::delay(300);
+  chassis.pid_odom_set({{15_in, 36.4_in}, fwd, 90});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-22_in, 35_in}, rev, 90});
+  pros::delay(50);
+  topIntake.move(0);
+  middleIntake.move(0);
+  bottomIntake.move(0);
+  wings.set(false);
+  chassis.pid_odom_set({{-22_in, 36.5_in}, rev, 100});
   chassis.pid_wait();
-  topIntake.move(127);
-  pros::delay(90);
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
   scraper.set(false);
+  //chassis.pid_wait();
   wings.set(false);
-  pros::delay(1900);
-  chassis.pid_odom_set({{-9_in, 31_in}, fwd, 90});
+  pros::delay(1500);
+  chassis.pid_odom_set({{-9_in, 36.3_in}, fwd, 90});
   chassis.pid_wait();
   wings.set(true);
   chassis.pid_wait();
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  chassis.pid_odom_set({{-27.5_in, 5.5_in}, fwd, 70});
+  chassis.pid_odom_set({{-31.5_in, 5.5_in}, fwd, 70});
+  pros::delay(1100);
+  scraper.set(true);
+  pros::delay(250);
+  scraper.set(false);
   chassis.pid_wait();
   //chassis.pid_odom_set({{-26_in, 38_in}, fwd, 90});
   chassis.pid_wait();
@@ -682,16 +691,23 @@ void AWP() {
   middleIntake.move(0); 
   topIntake.move(0);  
   wings.set(false);
-  chassis.pid_odom_set({{-39.5_in, -8.5_in}, fwd, 90});
+  chassis.pid_odom_set({{-38.6_in, -1.5_in}, fwd, 90});
+  chassis.pid_wait();
+  chassis.pid_drive_set(-2_in, 70);
+  chassis.pid_wait();
   bottomIntake.move(-127);
   middleIntake.move(-127); //47.6,15.5
   topIntake.move(-127);
-  pros::delay(500);
+  pros::delay(5000);
+  
+  
   // wings.set(true);
   // bottomIntake.move(0);
   // middleIntake.move(0); 
   // topIntake.move(0);
   // chassis.pid_wait();
+  // chassis.pid_odom_set({{-30.5_in, 1.5_in}, fwd, 90});
+  // pros::delay(700);
   // chassis.pid_odom_set({{0_in, -62_in, 90_deg}, fwd, 90});
   // scraper.set(true);
   // chassis.pid_wait();
@@ -707,6 +723,160 @@ void AWP() {
   // pros::delay(2000);
   
 }
+void realAWP(){//match loads one, scores on all 3
+  doublePark.set(false);
+  chassis.pid_odom_set({{0_in, 35_in},fwd, 100});
+  scraper.set(true);
+  wings.set(true);
+  chassis.pid_wait();
+  chassis.pid_turn_relative_set(87,90);
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{15_in, 36.4_in}, fwd, 90});
+  chassis.pid_wait();
+  pros::delay(50);
+  topIntake.move(0);
+  middleIntake.move(0);
+  bottomIntake.move(0);
+  wings.set(false);
+  chassis.pid_odom_set({{-22_in, 36.5_in}, rev, 100});
+  chassis.pid_wait();
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  scraper.set(false);
+  //chassis.pid_wait();
+  wings.set(false);
+  pros::delay(1500);
+  chassis.pid_odom_set({{-9_in, 36.3_in}, fwd, 90});
+  chassis.pid_wait();
+  wings.set(true);
+  chassis.pid_wait();
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  chassis.pid_odom_set({{-31.5_in, 5.5_in}, fwd, 70});
+  pros::delay(1100);
+  scraper.set(true);
+  pros::delay(250);
+  scraper.set(false);
+  chassis.pid_wait();
+  //chassis.pid_odom_set({{-26_in, 38_in}, fwd, 90});
+  chassis.pid_wait();
+  bottomIntake.move(0);
+  middleIntake.move(0); 
+  topIntake.move(0);  
+  wings.set(false);
+  chassis.pid_odom_set({{-38.6_in, -1.5_in}, fwd, 90});
+  chassis.pid_wait();
+  chassis.pid_drive_set(-2_in, 70);
+  chassis.pid_wait();
+  bottomIntake.move(-127);
+  middleIntake.move(-127); //47.6,15.5
+  topIntake.move(-127);
+  pros::delay(200);
+  
+
+  wings.set(true);
+  bottomIntake.move(0);
+  middleIntake.move(0); 
+  topIntake.move(0);//21,-28
+  chassis.pid_odom_set({{-38.5_in, -3.5_in}, rev, 90});
+  chassis.pid_wait();
+  bottomIntake.move(127);
+  middleIntake.move(127); 
+  topIntake.move(-127);
+  chassis.pid_odom_set({{-26.6_in, -43.5_in}, fwd, 90});
+  scraper.set(true);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{14_in, -64_in, 90_deg}, fwd, 90});
+  // pros::delay(20);
+  // chassis.pid_wait();
+  // bottomIntake.move(0);
+  // middleIntake.move(0);
+  // topIntake.move(0);  
+  // wings.set(false);
+  chassis.pid_odom_set({{-20_in, -63_in}, rev, 90});
+  bottomIntake.move(127);
+  middleIntake.move(127); 
+  topIntake.move(-127);
+  chassis.pid_wait();
+  wings.set(false);
+  pros::delay(10000);
+}
+void testAWP(){//match loads both, scores on all 3
+
+  doublePark.set(false);
+  chassis.pid_odom_set({{0_in, 35_in},fwd, 100});
+  scraper.set(true);
+  wings.set(true);
+  chassis.pid_wait();
+  chassis.pid_turn_relative_set(87,90);
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{15_in, 36.4_in}, fwd, 90});
+  chassis.pid_wait();
+  pros::delay(50);
+  topIntake.move(0);
+  middleIntake.move(0);
+  bottomIntake.move(0);
+  wings.set(false);
+  chassis.pid_odom_set({{-22_in, 36.5_in}, rev, 100});
+  chassis.pid_wait();
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  scraper.set(false);
+  //chassis.pid_wait();
+  wings.set(false);
+  pros::delay(1500);
+  chassis.pid_odom_set({{-9_in, 36.3_in}, fwd, 90});
+  chassis.pid_wait();
+  wings.set(true);
+  chassis.pid_wait();
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  chassis.pid_odom_set({{-31.5_in, 5.5_in, -180_deg}, fwd, 70});
+  pros::delay(1100);
+  scraper.set(true);
+  pros::delay(250);
+  scraper.set(false);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{-31.5_in, -43.5_in, 135_deg}, fwd, 90});
+  pros::delay(1800);
+  scraper.set(true);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{-44.5_in, -26.5_in, 90_deg}, fwd, 90});
+  chassis.pid_wait();
+  topIntake.move(127);
+  wings.set(false);
+  pros::delay(500);
+  wings.set(true);
+  chassis.pid_odom_set({{0_in, -61.5_in, 90_deg}, fwd, 90});
+  chassis.pid_wait();
+  chassis.pid_odom_set({{14_in, -61.5_in}, fwd, 90});
+  chassis.pid_wait();
+  pros::delay(50);
+  bottomIntake.move(0);
+  middleIntake.move(0);
+  topIntake.move(0);  
+  wings.set(false);
+  chassis.pid_odom_set({{-22_in, -61.5_in}, rev, 90});
+  pros::delay(900);
+  bottomIntake.move(127);
+  middleIntake.move(127);
+  topIntake.move(-127);
+  chassis.pid_wait();
+  
+  
+  
+  pros::delay(5000);
+  }
 //driver control
 void storing() {
   wings.set(true);

@@ -63,6 +63,8 @@ void initialize() {
     {"matchRight", matchRight},
       {"skills auton", autonSkills},
       {"matchLeft", matchLeft},
+      {"realAWP", realAWP},
+      {"testAWP", testAWP}
    
          
 
@@ -262,10 +264,10 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
     
-      wings.button_toggle(master.get_digital((DIGITAL_Y)));
+      wings.button_toggle(master.get_digital((DIGITAL_B)));
       pros::delay(24); //wings and hood toggle
       
-      scraper.button_toggle(master.get_digital(DIGITAL_B));
+      scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
 
       doublePark.button_toggle(master.get_digital(DIGITAL_LEFT));
