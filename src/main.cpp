@@ -48,23 +48,24 @@ void initialize() {
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
   chassis.opcontrol_drive_activebrake_set(2.0);   // Sets the active brake kP. We recommend ~2.  0 will disable.
-  chassis.opcontrol_curve_default_set(0.0, 4.0);  // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
+  chassis.opcontrol_curve_default_set(3.0, 3);  // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
   // Set the drive to your own constants from autons.cpp!
   default_constants();
 
-  // These are already defaulted to these buttons, but you can change the left/right curve buttons here!
+  // These are already defaulted to these buttons,  but you can change the left/right curve buttons here!
   // chassis.opcontrol_curve_buttons_left_set(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);  // If using tank, only the left side is used.
   // chassis.opcontrol_curve_buttons_right_set(pros::E_CONTROLLER_DIGITAL_Y, pros::E_CONTROLLER_DIGITAL_A);
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       
-    {"AWP", AWP},  
-    {"matchRight", matchRight},
+    {"rightODOM", AWP}, 
+    {"LeftOdomAuton", LeftAWP}, 
+    {"matchRightPID", matchRight},
       {"skills auton", autonSkills},
-      {"matchLeft", matchLeft},
-      {"realAWP", realAWP},
-      {"testAWP", testAWP}
+      {"matchLeftPID", matchLeft},
+      {"SoloAWP", testAWP}, 
+      {"skillsawp", skillsawp},
    
          
 
@@ -303,8 +304,9 @@ void opcontrol() {
     // }
     if(master.get_digital_new_press(DIGITAL_R1)){
       wings.set(false);
-      topIntake.move(70);
-      middleIntake.move(-70);
+      topIntake.move(40);
+      middleIntake.move(-40);
+      bottomIntake.move(-40);
       pros::delay(90);//outake before scoring
     }
     if (master.get_digital(DIGITAL_R1)) { //long macro
