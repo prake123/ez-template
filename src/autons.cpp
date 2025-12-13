@@ -742,34 +742,34 @@ void AWP() {
 }
 
 void testAWP(){//match loads both, scores on all 3
-
+//scraper takes 500 ms to get 3 balls
   doublePark.set(false);
-  chassis.pid_odom_set({{0_in, 35_in},fwd, 100});
+  chassis.pid_odom_set({{0_in, 35_in},fwd, 127});
   scraper.set(true);
   wings.set(true);
   chassis.pid_wait();
-  chassis.pid_turn_relative_set(87,90);
+  chassis.pid_turn_relative_set(87,127);
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
   chassis.pid_wait();
   chassis.pid_odom_set({{17_in, 35_in}, fwd, 90});
   chassis.pid_wait();
-  pros::delay(70);
+   pros::delay(70);
   topIntake.move(0);
   middleIntake.move(0);
   bottomIntake.move(0);
   wings.set(false);
-  chassis.pid_odom_set({{-22_in, 35.5_in}, rev, 100});
-  pros::delay(890);
+  chassis.pid_odom_set({{-22_in, 35.5_in}, rev, 127});
+  pros::delay(920);
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
   scraper.set(false);
   //chassis.pid_wait();
   wings.set(false);
-  pros::delay(1000);
-  // topIntake.move(127);
+  pros::delay(1300);
+  // topIntake.move(127); this is all anti jam and pushing blocks in for control
   // middleIntake.move(-127);
   // bottomIntake.move(-127);
   // pros::delay(350);
@@ -779,19 +779,18 @@ void testAWP(){//match loads both, scores on all 3
   // pros::delay(1250);
   // //chassis.pid_odom_set({{-17_in, 36.3_in}, fwd, 60});
   // chassis.pid_drive_set(9_in, 50);
-  // chassis.pid_wait();
+  // chassis.pid_wait();+
   // wings.set(true);
   // chassis.pid_wait();
   // chassis.pid_odom_set({{-22_in,36.5_in}, rev, 110});
-  chassis.pid_odom_set({{-9_in, 36.3_in}, fwd, 90});
-  //chassis.pid_wait();
-  pros::delay(650);
+  chassis.pid_odom_set({{{-3_in, 36.3_in}, fwd, 127},
+                       {{-31.5_in, 3.5_in}, fwd, 90}});//originally -31.6, 5.5
   wings.set(true);
-  topIntake.move(-127);
+  topIntake.move(-127); 
   middleIntake.move(127);
   bottomIntake.move(127);
-  chassis.pid_odom_set({{-31.5_in, 5.5_in}, fwd, 70});
-  pros::delay(800);
+  //chassis.pid_odom_set({{-31.5_in, 5.5_in}, fwd, 70});
+  pros::delay(1600);
   scraper.set(true);
   pros::delay(250);
   scraper.set(false);
@@ -800,39 +799,42 @@ void testAWP(){//match loads both, scores on all 3
   middleIntake.move(0); 
   topIntake.move(0);  
   wings.set(false);
-  chassis.pid_odom_set({{-38.6_in, -1.5_in}, fwd, 90});
-  pros::delay(300);
-  chassis.pid_drive_set(-2_in, 70);
+  chassis.pid_wait(); 
+  chassis.pid_odom_set({{-38.9_in, -1.5_in}, fwd, 90});
+  chassis.pid_wait();
   bottomIntake.move(-127);
   middleIntake.move(-127); //47.6,15.5
   topIntake.move(-127);
   pros::delay(600);
-  chassis.pid_odom_set({{-32_in,6_in}, rev, 110});
-  bottomIntake.move(127);
+  chassis.pid_odom_set({{-32_in,16_in,-185_deg} , rev, 127});
+  bottomIntake.move(127); 
   middleIntake.move(127);
   topIntake.move(-127);
   wings.set(true);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-29.5_in, -39.5_in}, fwd, 110});
+  chassis.pid_odom_set({{-29.5_in, -37.5_in, 150_deg}, fwd, 127});
   //add scraper to hold balls here
+  pros::delay(1050);
+  scraper.set(true);
+  pros::delay(250);
+  scraper.set(false);
   chassis.pid_wait();
   // chassis.pid_odom_set({{38.6_in,-25.5_in},rev,90});
   // topIntake.move(127);
   // middleIntake.move(127);
   // bottomIntake.move(127);
-  chassis.pid_odom_set({{{0_in, -63.5_in, 90_deg}, fwd, 100},
+  chassis.pid_odom_set({{{0_in, -63.5_in, 90_deg}, fwd, 120},
                        {{14_in, -64.5_in}, fwd, 90}});
-  pros::delay(500);
   scraper.set(true); 
   //chassis.pid_odom_set({{14_in, -64.5_in}, fwd, 90});
-  chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(2500);
+  pros::delay(20); 
   bottomIntake.move(0);
   middleIntake.move(0);
   topIntake.move(0);  
   wings.set(false);                                                                                                                         
-  chassis.pid_odom_set({{-22_in, -64.5_in}, rev, 110});
-  pros::delay(890);
+  chassis.pid_odom_set({{-22_in, -64.5_in}, rev, 127});
+  pros::delay(820);
   bottomIntake.move(127);
   middleIntake.move(127);
   topIntake.move(-127);
@@ -841,7 +843,6 @@ void testAWP(){//match loads both, scores on all 3
   
   
   
-  pros::delay(5000);
   }
   void skillsawp(){
     
@@ -991,6 +992,8 @@ void testAWP(){//match loads both, scores on all 3
   pros::delay(5000);
   
   }
+ 
+
 //driver control
 void storing() {
   wings.set(true);

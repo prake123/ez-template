@@ -249,6 +249,12 @@ void opcontrol() {
     ez_template_extras();
      count = 0;
 
+     double l1 = leftMotors.get_actual_velocity_all()[0];
+     double l2 = leftMotors.get_actual_velocity_all()[1];
+     double l3 = leftMotors.get_actual_velocity_all()[2];
+     double r1 = rightMotors.get_actual_velocity_all()[0];
+     double r2 = rightMotors.get_actual_velocity_all()[1];
+     double r3 = rightMotors.get_actual_velocity_all()[2];
 
   // pros::lcd::print(0, "Left B RPM: %.2f", bottomLeft.get_actual_velocity()); 
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
@@ -273,10 +279,16 @@ void opcontrol() {
 
       doublePark.button_toggle(master.get_digital(DIGITAL_LEFT));
     
-    if(master.get_digital_new_press(DIGITAL_LEFT)){
+    // if(master.get_digital_new_press(DIGITAL_LEFT)){
+    //   active = false;
+    //   doublePark.set(false);
+    // } //toggles double park off and undos double park
+
+    if(l1 > 0 || l2 > 0 || l3 > 0 || r1 > 0 || r2 > 0 || r3 > 0){
       active = false;
       doublePark.set(false);
-    } //toggles double park off and undos double park
+    } //undoes double park when moving
+
     
       // if(wings.get() && !last_wings){  //controller rumble when wings close
     //   master.rumble("-");
