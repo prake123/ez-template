@@ -59,12 +59,12 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       
-    {"rightODOM", AWP}, 
-    {"LeftOdomAuton", LeftAWP}, 
+    {"rightODOM", matchrightOdom}, 
+    {"LeftOdomAuton", matchleftOdom}, 
     {"matchRightPID", matchRight},
       {"skills auton", autonSkills},
       {"matchLeftPID", matchLeft},
-      {"SoloAWP", testAWP}, 
+      {"SoloAWP", sawp}, 
       {"skillsawp", skillsawp},
    
          
@@ -279,15 +279,15 @@ void opcontrol() {
 
       doublePark.button_toggle(master.get_digital(DIGITAL_LEFT));
     
-    // if(master.get_digital_new_press(DIGITAL_LEFT)){
-    //   active = false;
-    //   doublePark.set(false);
-    // } //toggles double park off and undos double park
-
-    if(l1 > 0 || l2 > 0 || l3 > 0 || r1 > 0 || r2 > 0 || r3 > 0){
+    if(master.get_digital_new_press(DIGITAL_LEFT)){
       active = false;
       doublePark.set(false);
-    } //undoes double park when moving
+    } //toggles double park off and undos double park
+
+    // if(l1 > 0 || l2 > 0 || l3 > 0 || r1 > 0 || r2 > 0 || r3 > 0){
+    //   active = false;
+    //   doublePark.set(false);
+    // } //undoes double park when moving
 
     
       // if(wings.get() && !last_wings){  //controller rumble when wings close
