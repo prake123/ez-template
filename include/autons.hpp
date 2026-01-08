@@ -13,12 +13,13 @@ void drive_example();
 void turn_example();
 void storing();
 void longScoring();
-void middleScoring();
+void middleScoring(); 
 void runDoublePark(bool active);
 void odom_drive_example();
 void AWP();\
-void testAWP();
 void skillsawp();
-void matchleftOdom();
-void matchrightOdom();
+void long4middle3left();
+void long4middle3right();
 void sawp();
+void long7Right();
+void long7Left();
