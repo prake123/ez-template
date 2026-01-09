@@ -48,7 +48,7 @@ void initialize() {
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
   chassis.opcontrol_drive_activebrake_set(2.0);   // Sets the active brake kP. We recommend ~2.  0 will disable.
-  chassis.opcontrol_curve_default_set(2.0, 6.0);  // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
+  chassis.opcontrol_curve_default_set(2.0, 2.0);  // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
   // Set the drive to your own constants from autons.cpp!
   default_constants();
 
@@ -58,12 +58,13 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      
-    {"long+middle right", matchrightOdom}, 
-    {"long+middle left", matchleftOdom}, 
-      {"skills auton", autonSkills},
-      {"matchLeftPID", matchLeft},
-      {"SoloAWP", sawp}, 
+
+    {"long+middle right", long4middle3right}, 
+    {"long+middle left", long4middle3left}, 
+    {"SoloAWP", sawp}, 
+    {"LongRight", long7Right}, 
+    {"LongLeft", long7Left},  
+    {"Skills", autonSkills}, 
       {"skillsawp", skillsawp},
    
          
@@ -277,6 +278,12 @@ void opcontrol() {
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
 
+      // wings.button_toggle(master.get_digital(DIGITAL_Y));
+      // pros::delay(24); 
+
+      // scraper.button_toggle(master.get_digital(DIGITAL_B));
+      // pros::delay(24);
+
       doublePark.button_toggle(master.get_digital(DIGITAL_LEFT));
     
     if(master.get_digital_new_press(DIGITAL_LEFT)){
@@ -303,9 +310,32 @@ void opcontrol() {
         rightMotors.move(0);//stops unnecessary coasting
       }
       else{
-         chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-      }
+        //  chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+        // scale only the turning input
+        const double TURN_SCALE = 0.8;  // 60% of normal turning speed
 
+        double fwd = master.get_analog(ANALOG_LEFT_Y);    // forward/reverse (unchanged)
+        double turn = master.get_analog(ANALOG_RIGHT_X); // turning
+        turn *= TURN_SCALE;
+
+        // mix to left/right and send to chassis
+        int left_out  = (int)(fwd + turn);
+        int right_out = (int)(fwd - turn);
+        // Clamp outputs to valid motor range
+        if (left_out > 127) left_out = 127;
+        if (left_out < -127) left_out = -127;
+        if (right_out > 127) right_out = 127;
+        if (right_out < -127) right_out = -127;
+        if(master.get_analog(ANALOG_RIGHT_X) == 0){
+          turn = 0;
+          for(int i = 0; i < 3; i++){
+            leftMotors.get_actual_velocity_all()[i] = fwd;
+            rightMotors.get_actual_velocity_all()[i] = fwd;
+          }
+        }
+        chassis.drive_set(left_out, right_out);
+      }
+      
 
       
     if (master.get_digital_new_press(DIGITAL_DOWN)) {//double park active set

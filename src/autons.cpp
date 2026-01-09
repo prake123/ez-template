@@ -450,7 +450,15 @@ void autonSkills() {
   middleIntake.move(127);
   bottomIntake.move(127);
   chassis.pid_odom_set({{14_in, 35_in}, fwd, 90});
-  pros::delay(1500);
+  chassis.pid_turn_relative_set(-15,127);
+  for(int i = 0; i < 7; i++){ //wiggle for match loader
+    chassis.pid_turn_relative_set(30, 127);
+    chassis.pid_wait_quick();
+    chassis.pid_turn_relative_set(-30, 127);
+    chassis.pid_wait_quick();
+  }
+  chassis.pid_turn_set(90_deg, 127);
+  // pros::delay(2000);
   chassis.pid_wait();
   chassis.pid_odom_set({{0_in, 35_in,-90_deg}, rev, 90});
   chassis.pid_wait();
@@ -465,21 +473,23 @@ void autonSkills() {
   chassis.pid_odom_set({{-97_in, 38_in}, fwd, 90});
   chassis.pid_wait();
   chassis.pid_odom_set({{-76_in, 38_in}, rev, 90});//moving to other side and scoring
-  wings.set(false);
+  chassis.pid_wait();
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
+  wings.set(false);
   scraper.set(true);
-  pros::delay(3000);
+  pros::delay(2500);
   wings.set(true);
   chassis.pid_wait();//47.6,15.5
   chassis.pid_odom_set({{-111_in, 38_in}, fwd, 90});//scraping
   pros::delay(2000);
   chassis.pid_wait();
   chassis.pid_odom_set({{-76_in, 38_in}, rev, 90});//scoring
+  chassis.pid_wait();
   wings.set(false);
   scraper.set(false);
-  pros::delay(3000);
+  pros::delay(2500);
   chassis.pid_wait();
   chassis.pid_odom_set({{-87_in, 38_in}, fwd, 90});//reversing
   chassis.pid_wait();
@@ -487,43 +497,43 @@ void autonSkills() {
   scraper.set(true);
   wings.set(true);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-110_in, -62.6_in}, fwd, 90});//scraping
-  pros::delay(4000);
+  chassis.pid_odom_set({{-112_in, -62.6_in}, fwd, 100});//scraping
+  pros::delay(3000);
   chassis.pid_wait();
   wings.set(true);
-  
-
-
-  chassis.pid_odom_set({{-95_in, -60.5_in, 0_deg}, rev, 90});
+  chassis.pid_odom_set({{-95_in, -60.5_in}, rev, 90});
   chassis.pid_wait();
   chassis.pid_odom_set({{-95_in, -44_in}, fwd, 90});
   chassis.pid_wait();
-  chassis.pid_odom_set({{0_in, -44_in, 90_deg}, fwd, 90});
+  chassis.pid_odom_set({{0_in, -44_in}, fwd, 90});
   chassis.pid_wait();
-  chassis.pid_odom_set({{0_in, -64.5_in,90_deg}, fwd, 90});
+  chassis.pid_odom_set({{0_in, -66.8_in}, fwd, 90});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-22_in, -64.5_in}, rev, 90});
-
+  chassis.pid_odom_set({{-22_in, -66.8_in}, rev, 90});
+  chassis.pid_wait();
   wings.set(false);
   pros::delay(4000);
   wings.set(true);
   scraper.set(true);
   chassis.pid_wait();
-  chassis.pid_odom_set({{14_in, -64.5_in}, fwd, 90});
-  pros::delay(5000);
+  chassis.pid_odom_set({{14_in, -66.8_in}, fwd, 90});
+  pros::delay(3000);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-22.13_in, -64.5_in}, rev, 90});
+  chassis.pid_odom_set({{-22.13_in, -65.5_in}, rev, 90});
+  
+  chassis.pid_wait();
   wings.set(false);
   scraper.set(false);
   chassis.pid_wait();
   pros::delay(4300);
-  chassis.pid_odom_set({{5.734_in, -64.832_in}, fwd, 90});
+  chassis.pid_odom_set({{0.734_in, -64.832_in}, fwd, 127});
   chassis.pid_wait();
-  chassis.pid_odom_set({{18.588_in, -34.411_in}, fwd, 90});
+  chassis.pid_odom_set({{18.588_in, -34.411_in}, fwd, 127});
   chassis.pid_wait();
   scraper.set(true);
-  chassis.pid_odom_set({{18.588_in, -15.4235_in}, fwd, 90});
+  chassis.pid_odom_set({{18.588_in, -15.4235_in}, fwd, 127});
   scraper.set(false);
+  pros::delay(10000);
 }
 
 
@@ -638,80 +648,96 @@ void long4middle3right() {
   void skillsawp(){
     
   doublePark.set(false);
-  chassis.pid_odom_set({{0_in, 35_in},fwd, 100});
+  chassis.pid_odom_set({{0_in, 35_in},fwd, 127});
   scraper.set(true);
   wings.set(true);
-  chassis.pid_wait();
-  chassis.pid_turn_relative_set(87,90);
+  chassis.pid_wait_quick();
+  chassis.pid_turn_relative_set(87,127);
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
+  chassis.pid_wait_quick();
+  chassis.pid_odom_set({{19_in, 35_in}, fwd, 127});//at match loader
   chassis.pid_wait();
-  chassis.pid_odom_set({{15_in, 35_in}, fwd, 90});
-  chassis.pid_wait();
-  chassis.pid_drive_set(-5_in,60);
-  chassis.pid_wait();
-  chassis.pid_odom_set({{15_in,35_in},fwd, 70});
-  pros::delay(4000);
+  pros::delay(1000);
   topIntake.move(0);
   middleIntake.move(0);
   bottomIntake.move(0);
-  wings.set(false);
-  chassis.pid_odom_set({{-22_in, 36.5_in}, rev, 100});
-  chassis.pid_wait();
+  wings.set(true);
+  chassis.pid_odom_set({{-22_in, 36_in}, rev, 127});//long goal
+  
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
+  chassis.pid_wait();
+  wings.set(false);
+ 
   scraper.set(false);
   //chassis.pid_wait();
   wings.set(false);
-  pros::delay(3000);
-  topIntake.move(127);
-  middleIntake.move(-127);
-  bottomIntake.move(-127);
-  pros::delay(350);
-  topIntake.move(-127);
+  pros::delay(1300);
+  chassis.pid_odom_set({{{-3_in, 36.3_in}, fwd, 127},
+                       {{-30.5_in, 3.5_in}, fwd, 90}});//scrape balls
+  wings.set(true);
+  topIntake.move(-127); 
   middleIntake.move(127);
   bottomIntake.move(127);
-  pros::delay(3250);
-  //chassis.pid_odom_set({{-17_in, 36.3_in}, fwd, 60});
-  chassis.pid_drive_set(9_in, 50);
-  chassis.pid_wait();
-  wings.set(true);
-  chassis.pid_wait();
-  chassis.pid_odom_set({{-22_in,36.5_in}, rev, 110});
-  chassis.pid_wait();
-  chassis.pid_odom_set({{-9_in, 36.3_in}, fwd, 90});
-  chassis.pid_wait();
-  wings.set(true);
-  chassis.pid_wait();
-  topIntake.move(-127);
-  middleIntake.move(127);
-  bottomIntake.move(127);
-  chassis.pid_odom_set({{-31.5_in, 5.5_in}, fwd, 70});
-  pros::delay(1100);
+  pros::delay(1600);
   scraper.set(true);
-  pros::delay(250);
+  pros::delay(450);
   scraper.set(false);
-  chassis.pid_wait();
-  //chassis.pid_odom_set({{-26_in, 38_in}, fwd, 90});
-  chassis.pid_wait();
+   
+  // chassis.pid_wait();
+  chassis.pid_odom_set({{-30.5_in, -37.5_in}, fwd, 127});//scrap more balls
+  //add scraper to hold balls here
+  pros::delay(1250);
+  scraper.set(true);
+  // pros::delay(150);
+  chassis.pid_wait_quick_chain(); 
+  chassis.pid_turn_set({-39.1_in,-30.2_in}, rev, 127);//turn to middle
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{-39.1_in, -30.2_in}, rev, 127});//go to middle used to be -38.6,-29.2
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-2_in, 127);
+  topIntake.move(127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  chassis.pid_wait_quick();
+  pros::delay(2000);
+  topIntake.move(0);
+  middleIntake.move(0);
   bottomIntake.move(0);
-  middleIntake.move(0); 
-  topIntake.move(0);  
-  wings.set(false);
-  chassis.pid_odom_set({{-38.6_in, -1.5_in}, fwd, 90});
-  chassis.pid_wait();
-  chassis.pid_drive_set(-2_in, 70);
-  chassis.pid_wait();
-  bottomIntake.move(-127);
-  middleIntake.move(-127); //47.6,15.5
+  chassis.pid_odom_set({{{0_in, -63.5_in}, fwd, 120}});//go towards match loader
+  chassis.pid_wait_quick();
+  chassis.pid_turn_set({14_in, -65.5_in}, fwd, 127);//align to match loader
+  chassis.pid_wait_quick(); 
   topIntake.move(-127);
-  pros::delay(5000);
-  chassis.pid_drive_set(-5_in, 70);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  chassis.pid_odom_set({{15_in, -65.5_in}, fwd, 110});//scrape match loader
+  scraper.set(true);
+  // chassis.pid_wait_quick();
+  pros::delay(3000);
+  wings.set(true);                                                                                                                         
+  chassis.pid_odom_set({{-22_in, -65_in}, rev, 127});//go to long goal
+   topIntake.move(127);
+   pros::delay(90);
+   topIntake.move(-127);
+
+  pros::delay(780);
+  wings.set(false);
+  bottomIntake.move(127);
+  middleIntake.move(127);
+  topIntake.move(-127);
   chassis.pid_wait();
-  chassis.pid_odom_set({{18_in,-15_in}, fwd, 90});
-  }
+  pros::delay(5000);
+  chassis.pid_odom_set({{0_in, -65.5_in}, fwd, 127});//back away from goal
+  chassis.pid_wait();
+  chassis.pid_odom_set({{0_in, -44_in, 90_deg}, fwd, 90});
+  chassis.pid_wait();
+  chassis.pid_odom_set({{15_in, -15.5_in}, fwd, 127});
+
+}
   void long4middle3left() {
     doublePark.set(false);
   chassis.pid_odom_set({{0_in, 35_in},fwd, 100});
@@ -773,7 +799,9 @@ void long4middle3right() {
   middleIntake.move(0); 
   topIntake.move(0);  
   wings.set(false);
-  chassis.pid_odom_set({{41.2_in, 1.5_in}, rev, 90});
+  chassis.pid_turn_set(-45_deg, 90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-10_in,90);
   chassis.pid_wait();
   chassis.pid_drive_set(-1_in, 70);
   chassis.pid_wait();
@@ -835,26 +863,32 @@ void sawp(){
   chassis.pid_odom_set({{-39.1_in, -30.2_in}, rev, 127});//go to middle used to be -38.6,-29.2
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-2_in, 127);
-  topIntake.move(127);
-  middleIntake.move(127);
-  bottomIntake.move(127);
+  topIntake.move(100);
+  middleIntake.move(100);
+  bottomIntake.move(100);
   chassis.pid_wait_quick();
   pros::delay(400);
+  topIntake.move(0);
+  middleIntake.move(0);
+  bottomIntake.move(0);
   chassis.pid_odom_set({{{0_in, -63.5_in}, fwd, 120}});//go towards match loader
   chassis.pid_wait_quick();
   chassis.pid_turn_set({14_in, -65.5_in}, fwd, 127);//align to match loader
   chassis.pid_wait_quick(); 
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
   chassis.pid_odom_set({{15_in, -65.5_in}, fwd, 110});//scrape match loader
   scraper.set(true);
-  chassis.pid_wait_quick();
-  // pros::delay(300);  
+  // chassis.pid_wait_quick();
+  pros::delay(900);
   wings.set(true);                                                                                                                         
   chassis.pid_odom_set({{-22_in, -65_in}, rev, 127});//go to long goal
    topIntake.move(127);
    pros::delay(90);
    topIntake.move(-127);
 
-  pros::delay(830);
+  pros::delay(780);
   wings.set(false);
   bottomIntake.move(127);
   middleIntake.move(127);
@@ -971,7 +1005,7 @@ void runDoublePark(bool active) {
     }
 
     if(distancesensor.get() < 85){
-        pros::delay(60 );
+        pros::delay(22);
         topIntake.move(0);
         middleIntake.move(0);
         bottomIntake.move(0);
