@@ -23,3 +23,4 @@ void long4middle3right();
 void sawp();
 void long7Right();
 void long7Left();
+void jank();

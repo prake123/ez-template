@@ -66,6 +66,7 @@ void initialize() {
     {"LongLeft", long7Left},  
     {"Skills", autonSkills}, 
       {"skillsawp", skillsawp},
+      {"park", jank}
    
          
 
@@ -261,14 +262,14 @@ void opcontrol() {
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_vel+-9885ocity());
   pros::lcd::print(6, "Lebron");
-   pros::lcd::print(4, "%d", distancesensor.get()); //returns distance sensor value in mm
-   pros::lcd::print(5, "Right T RPM: %.2f", optical.get_hue()); //returns color sensor hue value (0-360)
+   pros::lcd::print(4, "X: %.2f", chassis.odom_x_get()); //returns current x value of robot
+   pros::lcd::print(5, "Y: %.2f", chassis.odom_y_get()); //returns current y value of robot
 
 
     //chassis.opcontrol_tank();  // Tank control
      //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
-    //chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
+    // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
     
@@ -321,7 +322,6 @@ void opcontrol() {
         // mix to left/right and send to chassis
         int left_out  = (int)(fwd + turn);
         int right_out = (int)(fwd - turn);
-        // Clamp outputs to valid motor range
         if (left_out > 127) left_out = 127;
         if (left_out < -127) left_out = -127;
         if (right_out > 127) right_out = 127;
