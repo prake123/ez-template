@@ -2,7 +2,7 @@
 
 void default_constants();
 
-
+//add auton functions here
 void autonSkills();
 void matchRight();
 void testAuton();
@@ -24,3 +24,4 @@ void sawp();
 void long7Right();
 void long7Left();
 void jank();
+void intakeTorque();

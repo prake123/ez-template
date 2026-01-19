@@ -1097,6 +1097,7 @@ void redColorSort(bool middle) {
         pros::delay(490);
         direction = 127;
     }
+  }
     else{
       bottomIntake.move(0);
       middleIntake.move(-20);
@@ -1108,7 +1109,33 @@ void redColorSort(bool middle) {
       pros::delay(190);
       direction = -127;
     }
-  
-    
   }
+  void intakeTorque(){
+      if(master.get_digital(DIGITAL_L1)){
+        bottomIntake.move(127);
+      topIntake.move(-127); 
+      middleIntake.move(127);
+      wings.set(true);
+    while(topIntake.get_torque() < 1.5){
+      topIntake.move(-127);
+      pros::delay(50);
+      topIntake.move(127);
+      while(middleIntake.get_torque() < 1.5){
+        middleIntake.move(127);
+        topIntake.move(-127);
+        pros::delay(50);
+        middleIntake.move(-127);
+        topIntake.move(127);
+        while(bottomIntake.get_torque() < 1.5){
+          topIntake.move(-127);
+          middleIntake.move(127);
+          bottomIntake.move(127);
+          pros::delay(50);
+          bottomIntake.move(-127);
+          topIntake.move(127);
+          middleIntake.move(-127);
+        }
+    } 
+  }
+} 
 }

@@ -8,8 +8,8 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    { -16, 12, -2},     // Left Chassis Ports (negative port will reverse it!  -1)
-    {13, -14, 11},  // Right Chassis Ports (negative port will reverse it!)
+    { -2, 16, -12},     // Left Chassis Ports (negative port will reverse it!  -1)
+    {5, -14, 13},  // Right Chassis Ports (negative port will reverse it!)
 
     17,      // IMU Port
     3.375,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -272,9 +272,12 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
-    
-      wings.button_toggle(master.get_digital((DIGITAL_B)));
-      pros::delay(24); //wings and hood toggle
+    if(master.get_digital(DIGITAL_B)){
+      wings.set(false);
+    }
+    else{wings.set(true);}
+      // wings.button_toggle(master.get_digital((DIGITAL_B)));
+      // pros::delay(24); //wings and hood toggle
       
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
