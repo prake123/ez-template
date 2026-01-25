@@ -47,8 +47,7 @@ void initialize() {
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
-  chassis.opcontrol_drive_activebrake_set(0.0);   // Disable active brake for free rolling
-  chassis.drive_brake_set(0);                     // Set brake mode to coast (0) for free rolling
+  chassis.opcontrol_drive_activebrake_set(0);   // Sets the active brake kP. We recommend ~2.  0 will disable.
   chassis.opcontrol_curve_default_set(2.0, 2.0);  // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
   // Set the drive to your own constants from autons.cpp!
   default_constants();
@@ -273,12 +272,12 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
-    // if(master.get_digital(DIGITAL_B)){
-    //   wings.set(false);
-    // }
-    // else{wings.set(true);}
-      wings.button_toggle(master.get_digital((DIGITAL_B)));
-      pros::delay(24); //wings and hood toggle
+    if(master.get_digital(DIGITAL_B)){
+      wings.set(false);
+    }
+    else{wings.set(true);}
+      // wings.button_toggle(master.get_digital((DIGITAL_B)));
+      // pros::delay(24); //wings and hood toggle
       
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
@@ -309,14 +308,14 @@ void opcontrol() {
 
       
       pros::delay(24);
-      
-      if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
-        leftMotors.brake();
-        rightMotors.brake(); // allows free rolling using brake mode
-      }
-      else{
-      //    chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-      //   scale only the turning input
+      //this is braking?
+      //if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
+      //  leftMotors.move(0);
+      //  rightMotors.move(0);//stops unnecessary coasting
+      //}
+      //else{
+        //  chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+        // scale only the turning input
         const double TURN_SCALE = 0.8;  // 60% of normal turning speed
 
         double fwd = master.get_analog(ANALOG_LEFT_Y);    // forward/reverse (unchanged)
@@ -338,7 +337,7 @@ void opcontrol() {
           }
         }
         chassis.drive_set(left_out, right_out);
-       }
+      //}
       
 
       
@@ -389,8 +388,7 @@ void opcontrol() {
     //   colorSort = false;
     //   if(storingActive){//storing toggle when pressing L1
     // bottomIntake.move(127);
-    // topIntake.move(127); yo ma clanka
-     
+    // topIntake.move(127); 
     // middleIntake.move(-127);
     // wings.set(true);
   //}
