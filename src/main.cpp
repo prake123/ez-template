@@ -262,10 +262,8 @@ void opcontrol() {
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_vel+-9885ocity());
   pros::lcd::print(6, "Lebron");
-   pros::lcd::print(4, "X: %.2f", chassis.odom_x_get()); //returns current x value of robot
-   pros::lcd::print(5, "Y: %.2f", chassis.odom_y_get()); //returns current y value of robot
-
-
+  master.print(0, 0, "X: %.2f", chassis.odom_x_get());
+  master.print(1, 0, "Y: %.2f", chassis.odom_y_get());
     //chassis.opcontrol_tank();  // Tank control
      //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
@@ -305,7 +303,7 @@ void opcontrol() {
     //   master.rumble("-");
     // }    // last_wings = wings.get();
 
-
+    
       
       pros::delay(24);
       //this is braking?
@@ -358,16 +356,12 @@ void opcontrol() {
        
       bottomIntake.move(127);
       topIntake.move(-127);
-            middleIntake.move(127);
+      middleIntake.move(127);
       colorSort = true;
       middle = false;
-      //longScore = true;
     } 
     else if (master.get_digital(DIGITAL_R2)) { //middle macro
        wings.set(false);
-      // topIntake.move(-70);
-      // middleIntake.move(-70);
-      // pros::delay(90);//outake before scoring
       bottomIntake.move(127);
       topIntake.move(127);
       middleIntake.move(127);
