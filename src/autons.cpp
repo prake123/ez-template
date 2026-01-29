@@ -499,31 +499,31 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   pros::delay(2000);
   chassis.pid_wait();
   wings.set(true);
-  chassis.pid_odom_set({{-95_in, -60.5_in}, rev, 90});
+  chassis.pid_odom_set({{-95_in, -60.5_in}, rev, 90});//reversing to other side
   chassis.pid_wait();
-  chassis.pid_odom_set({{-95_in, -44_in}, fwd, 90});
+  chassis.pid_odom_set({{-95_in, -44_in}, fwd, 90});//reversing to other side
   chassis.pid_wait();
-  chassis.pid_odom_set({{0_in, -44_in}, fwd, 120});
+  chassis.pid_odom_set({{0_in, -44_in}, fwd, 120});//reversing to other side
   chassis.pid_wait();
-  chassis.pid_odom_set({{0_in, -66.8_in}, fwd, 90});
+  chassis.pid_odom_set({{0_in, -66.8_in}, fwd, 90});//reversing to other side
   chassis.pid_wait();
-  chassis.pid_odom_set({{-22_in, -68.8_in}, rev, 90});
+  chassis.pid_odom_set({{-22_in, -68.8_in}, rev, 90});//scoring at long goal
   chassis.pid_wait();
   wings.set(false);
   pros::delay(2000);
   wings.set(true);
   scraper.set(true);
   chassis.pid_wait();
-  chassis.pid_odom_set({{14_in, -68.8_in}, fwd, 90});
+  chassis.pid_odom_set({{14_in, -68.8_in}, fwd, 90});//going to scraper
   chassis.pid_wait();
   pros::delay(2500);
-  chassis.pid_odom_set({{-22.13_in, -67.5_in}, rev, 120});
+  chassis.pid_odom_set({{-22.13_in, -67.5_in}, rev, 120});//going back to long goal
   chassis.pid_wait();
   wings.set(false);
   scraper.set(false);
   chassis.pid_wait();
   pros::delay(2000);
-  chassis.pid_odom_set({{0.734_in, -64.832_in}, fwd, 127});
+  chassis.pid_odom_set({{0.734_in, -64.832_in}, fwd, 127});//jank parking route try to fix if you have time
   chassis.pid_wait();
   chassis.pid_odom_set({{18.588_in, -34.411_in}, fwd, 127});
   chassis.pid_wait();
