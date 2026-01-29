@@ -491,11 +491,11 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
   chassis.pid_odom_set({{-87_in, 35_in}, fwd, 90});//reversing
   chassis.pid_wait();
-  chassis.pid_odom_set({{-93.4_in, -62_in}, fwd, 120});//going to other side
+  chassis.pid_odom_set({{-93.4_in, -64_in}, fwd, 120});//going to other side
   scraper.set(true);
   wings.set(true);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-114_in, -62.6_in}, fwd, 100});//scraping
+  chassis.pid_odom_set({{-114_in, -64.6_in}, fwd, 100});//scraping
   pros::delay(2000);
   chassis.pid_wait();
   wings.set(true);
@@ -507,17 +507,17 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
   chassis.pid_odom_set({{0_in, -66.8_in}, fwd, 90});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-22_in, -66.8_in}, rev, 90});
+  chassis.pid_odom_set({{-22_in, -68.8_in}, rev, 90});
   chassis.pid_wait();
   wings.set(false);
   pros::delay(2000);
   wings.set(true);
   scraper.set(true);
   chassis.pid_wait();
-  chassis.pid_odom_set({{14_in, -66.8_in}, fwd, 90});
+  chassis.pid_odom_set({{14_in, -68.8_in}, fwd, 90});
   chassis.pid_wait();
   pros::delay(2500);
-  chassis.pid_odom_set({{-22.13_in, -65.5_in}, rev, 120});
+  chassis.pid_odom_set({{-22.13_in, -67.5_in}, rev, 120});
   chassis.pid_wait();
   wings.set(false);
   scraper.set(false);
@@ -999,6 +999,8 @@ void long7Left(){ //does not currently work needs fixing
   chassis.pid_wait();
   chassis.pid_odom_set({{22_in,36.5_in}, rev, 110});
 }
+
+
 //driver control
 //TRY NOT TO TOUCH THESE FUNCTIONS UNLESS NECESSARY
 //=======================================================================
