@@ -606,11 +606,11 @@ void long4middle3right() {//lowkey goated auton
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  chassis.pid_odom_set({{-31.5_in, 5.5_in}, fwd, 70});
+  chassis.pid_odom_set({{-31.5_in, 5.5_in}, fwd, 50});
   pros::delay(1100);
-  scraper.set(true);
+  /*scraper.set(true); //it works without scraper since i slowed it from 70 to 50
   pros::delay(250);
-  scraper.set(false);
+  scraper.set(false);*/
   chassis.pid_wait();
   //chassis.pid_odom_set({{-26_in, 38_in}, fwd, 90});
   chassis.pid_wait();
@@ -835,15 +835,15 @@ void sawp(){//works pretty well try not to change anything
   middleIntake.move(127);
   bottomIntake.move(127);
   chassis.pid_wait_quick();
-  chassis.pid_odom_set({{19_in, 34.5_in}, fwd, 127});//at match loader
-  pros::delay(910);
+  chassis.pid_odom_set({{19_in, 34.5_in}, fwd, 100});//at match loader
+  pros::delay(920);
   wings.set(true);
   chassis.pid_odom_set({{-22_in, 35_in}, rev, 127});//long goal
   
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  pros::delay(920);
+  pros::delay(910);
   wings.set(false);
  
   scraper.set(false);
@@ -862,7 +862,7 @@ void sawp(){//works pretty well try not to change anything
   scraper.set(false);
    
   // chassis.pid_wait();
-  chassis.pid_odom_set({{-30.5_in, -32.5_in}, fwd, 127});//scrap more balls
+  chassis.pid_odom_set({{-32.5_in, -32.5_in}, fwd, 127});//scrap more balls
   //add scraper to hold balls here
   pros::delay(1320);
   scraper.set(true);
