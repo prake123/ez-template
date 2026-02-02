@@ -57,7 +57,7 @@ void initialize() {
   // chassis.opcontrol_curve_buttons_right_set(pros::E_CONTROLLER_DIGITAL_Y, pros::E_CONTROLLER_DIGITAL_A);
 
   // Autonomous Selector using LLEMU
-  ez::as::auton_selector.autons_add({
+   ez::as::auton_selector.autons_add({
 
    
     {"Skills", autonSkills}, 
@@ -240,7 +240,7 @@ void opcontrol() {
   bool storingActive = false; //storing macro
   bool colorSort = true; //color sort toggle
   bool middle = false; //color sort middle decision
-  chassis.drive_brake_set(MOTOR_BRAKE_COAST);
+  // chassis.drive_brake_set(MOTOR_BRAKE_COAST); //(no braking)
   while (true) {
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
@@ -264,13 +264,14 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
-    if(master.get_digital(DIGITAL_B)){
-      wings.set(false);
+    /*if(master.get_digital(DIGITAL_B)){
+      wings.set(true);
     }
-    else{wings.set(true);}
+    else{wings.set(false);}*/
       // wings.button_toggle(master.get_digital((DIGITAL_B)));
       // pros::delay(24); //wings and hood toggle
       
+      wings.button_toggle(master.get_digital(DIGITAL_B));
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
 
@@ -280,8 +281,11 @@ void opcontrol() {
       // scraper.button_toggle(master.get_digital(DIGITAL_B));
       // pros::delay(24);
 
+      //doublePark.button_toggle(master.get_digital(DIGITAL_LEFT));
     
-    
+    if(master.get_digital_new_press(DIGITAL_LEFT)){
+      active = false;
+      //doublePark.set(false);
     } //toggles double park off and undos double park
 
     // if(l1 > 0 || l2 > 0 || l3 > 0 || r1 > 0 || r2 > 0 || r3 > 0){
@@ -330,7 +334,12 @@ void opcontrol() {
       
 
       
-   
+    if (master.get_digital_new_press(DIGITAL_DOWN)) {//double park active set
+      active = true;
+    }
+    // else if (!master.get_digital_new_press(DIGITAL_UP)) {
+    //   active = false;
+    // }
     if(master.get_digital_new_press(DIGITAL_R1)){
       wings.set(false);
       intakeLift.set(false);
@@ -340,27 +349,43 @@ void opcontrol() {
       pros::delay(90);//outake before scoring
     }
     if (master.get_digital(DIGITAL_R1)) { //long macro
-       intakeLift.set(false);
+       
       bottomIntake.move(127);
       topIntake.move(-127);
-            middleIntake.move(127);
-      colorSort = true;
-      middle = false;
-      //longScore = true;
-    } 
-    else if (master.get_digital(DIGITAL_R2)) { //middle macro
-      intakeLift.set(false); 
-      wings.set(false);
-      // topIntake.move(-70);
-      // middleIntake.move(-70);
-      // pros::delay(90);//outake before scoring
-      bottomIntake.move(127);
-      topIntake.move(127);
       middleIntake.move(127);
       colorSort = true;
-      middle= true;
+      middle = false;
     } 
-    else if (master.get_digital(DIGITAL_L2)){
+    else if (master.get_digital(DIGITAL_R2)) { //middle macro
+       /*wings.set(false);
+       intakeLift.set(false);
+      bottomIntake.move(127);
+      topIntake.move(40);
+      middleIntake.move(70);
+      colorSort = true;
+      middle= true;*/
+      wings.set(false);
+    intakeLift.set(false);
+    colorSort = true;
+    middle = true;
+
+    // Define the timing for the oscillation (in milliseconds)
+    int cycleTime = 500; 
+    int forwardTime = 350; // Runs forward for 400ms
+
+    if (pros::millis() % cycleTime < forwardTime) {
+        // NORMAL FORWARD (Slowed down for scoring)
+        bottomIntake.move(127); 
+        topIntake.move(40);     // Slightly boosted from 40 to prevent initial stall
+        middleIntake.move(60);
+    } else {
+        // ANTI-JAM SHIVER (Briefly pulse backward)
+        bottomIntake.move(-40); 
+        topIntake.move(-20); 
+        middleIntake.move(-50);
+    }
+    } 
+    else if (master.get_digital(DIGITAL_DOWN)){
       intakeLift.set(false);
       bottomIntake.move(-127);
       topIntake.move(127); 
@@ -381,25 +406,22 @@ void opcontrol() {
     // wings.set(true);
   //}
     }
-    else if (active) {
-    runDoublePark(active);
+    else if (master.get_digital(DIGITAL_L2)) {
+    intakeLift.set(true);
+    bottomIntake.move(-45);
+    topIntake.move(20); 
+    middleIntake.move(-127);
 }  
     else {
       bottomIntake.move(0);
       topIntake.move(0);
       middleIntake.move(0);
     }
-     if(master.get_digital(DIGITAL_A)){
-      bottomIntake.move(-60);
-      intakeLift.set(true);
-      middleIntake.move(-60);
-      topIntake.move(60);
-    }
       
     // if(colorSort){ broken color sort rip
     //   redColorSort(middle);
       //blueColorSort();
-  
+  }
   if(storingActive){//storing toggle when pressing L1
     bottomIntake.move(127);
     topIntake.move(127); 
@@ -420,4 +442,3 @@ void opcontrol() {
   
 
 }
- 
