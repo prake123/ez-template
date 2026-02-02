@@ -269,13 +269,14 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
-    if(master.get_digital(DIGITAL_B)){
-      wings.set(false);
+    /*if(master.get_digital(DIGITAL_B)){
+      wings.set(true);
     }
-    else{wings.set(true);}
+    else{wings.set(false);}*/
       // wings.button_toggle(master.get_digital((DIGITAL_B)));
       // pros::delay(24); //wings and hood toggle
       
+      wings.button_toggle(master.get_digital(DIGITAL_B));
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
 
@@ -419,4 +420,3 @@ void opcontrol() {
   
 
 }
- 
