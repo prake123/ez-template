@@ -8,7 +8,7 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    { -2, 16, -12},     // Left Chassis Ports (negative port will reverse it!  -1)
+    { -2, 11, -12},     // Left Chassis Ports (negative port will reverse it!  -1)
     {5, -14, 13},  // Right Chassis Ports (negative port will reverse it!)
 
     17,      // IMU Port
@@ -63,9 +63,10 @@ void initialize() {
     {"long+middle left", long4middle3left}, 
     {"SoloAWP", sawp}, 
     {"LongRight", long7Right}, 
-    {"LongLeft", long7Left},  
+    {"LongLeft", long7Left},
+    {"Right Wing Rush", wingRushRight},  
     {"Skills", autonSkills}, 
-      {"skillsawp", skillsawp},
+      
       {"park", jank}
    
          

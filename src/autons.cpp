@@ -380,69 +380,39 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
-void matchLeft() {//f*ck PID
-  wings.set(true);
-  chassis.pid_drive_set(8_in, 90);
-  wings.set(true);
-  chassis.pid_wait();
-  chassis.pid_turn_relative_set(-22,40);
-  chassis.pid_wait();
-  bottomIntake.move(127);
-  middleIntake.move(127);
-  topIntake.move(-127); 
-  chassis.pid_drive_set(31_in, 20);
-  chassis.pid_wait();
-  pros::delay(300);
-  bottomIntake.move(-50);
-  middleIntake.move(-50);
-  topIntake.move(-50);
-  pros::delay(50);
-  bottomIntake.move(0);
-  middleIntake.move(0);
-  topIntake.move(0);
-  chassis.pid_drive_set(-32_in, 70);
-  chassis.pid_wait();
-  chassis.pid_turn_relative_set(-70, 45);
-  chassis.pid_wait();
-  chassis.pid_drive_set(33_in ,80);
-  chassis.pid_wait();
-  chassis.pid_turn_relative_set(-90,50);
-  chassis.pid_wait();
-  chassis.pid_drive_set(-15_in,80);
-  wings.set(false);
-  chassis.pid_wait();
+void wingRushRight(){
   scraper.set(true);
-  chassis.pid_wait();
-  bottomIntake.move(127);
-  middleIntake.move(127);
-  topIntake.move(-127); 
-  chassis.pid_wait();
-  pros::delay(1900);
   wings.set(true);
-  chassis.pid_drive_set(34_in, 45 );
+  chassis.pid_odom_set({{0_in, 35_in},fwd, 90});//align to loader
   chassis.pid_wait();
-  chassis.pid_drive_set(-3_in, 70);
-  chassis.pid_wait();
-  chassis.pid_drive_set(5_in, 60);
-  pros::delay(800);
-  bottomIntake.move(0);
-  middleIntake.move(0);
-  topIntake.move(-0);
-  wings.set(false);
-  chassis.pid_drive_set(-32_in,70);
-  chassis.pid_wait();
-  wings.set(false);
-  pros::delay(1000);
-  bottomIntake.move(127);
-  middleIntake.move(127);
   topIntake.move(-127);
-  pros::delay(800);
-  chassis.pid_drive_set(5_in,60);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  chassis.pid_turn_set(90_deg, 127);//turn to loader
   chassis.pid_wait();
-  chassis.pid_drive_set(-7_in, 90 );
-  pros::delay(3000);
-}
-                                                                          
+  chassis.pid_odom_set({{17_in, 35_in}, fwd, 90});//go to loader
+  chassis.pid_wait();
+  pros::delay(200);
+  topIntake.move(0);
+  middleIntake.move(0);
+  bottomIntake.move(0);
+  wings.set(false);
+  chassis.pid_odom_set({{-22_in, 35.5_in}, rev, 100});
+  chassis.pid_wait();
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  scraper.set(false);
+  //chassis.pid_wait();
+  wings.set(false);
+  pros::delay(400);
+  chassis.pid_odom_set({{8.27_in,23.6_in},fwd,90});
+  chassis.pid_wait();
+  wings.set(true);
+  chassis.pid_turn_set(90_deg,127);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-12_in,90);
+}                                                                   
 
 void autonSkills() {//needs to be tuned for alignment and changed in future for higher scores
   scraper.set(true);
@@ -654,99 +624,7 @@ void long4middle3right() {//lowkey goated auton
 }
 
 
-  void skillsawp(){
-    
-  doublePark.set(false);
-  chassis.pid_odom_set({{0_in, 35_in},fwd, 127});
-  scraper.set(true);
-  wings.set(true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_relative_set(87,127);
-  topIntake.move(-127);
-  middleIntake.move(127);
-  bottomIntake.move(127);
-  chassis.pid_wait_quick();
-  chassis.pid_odom_set({{19_in, 35_in}, fwd, 127});//at match loader
-  chassis.pid_wait();
-  pros::delay(1000);
-  topIntake.move(0);
-  middleIntake.move(0);
-  bottomIntake.move(0);
-  wings.set(true);
-  chassis.pid_odom_set({{-22_in, 36_in}, rev, 127});//long goal
   
-  topIntake.move(-127);
-  middleIntake.move(127);
-  bottomIntake.move(127);
-  chassis.pid_wait();
-  wings.set(false);
- 
-  scraper.set(false);
-  //chassis.pid_wait();
-  wings.set(false);
-  pros::delay(1300);
-  chassis.pid_odom_set({{{-3_in, 36.3_in}, fwd, 127},
-                       {{-30.5_in, 3.5_in}, fwd, 90}});//scrape balls
-  wings.set(true);
-  topIntake.move(-127); 
-  middleIntake.move(127);
-  bottomIntake.move(127);
-  pros::delay(1600);
-  scraper.set(true);
-  pros::delay(450);
-  scraper.set(false);
-   
-  // chassis.pid_wait();
-  chassis.pid_odom_set({{-30.5_in, -37.5_in}, fwd, 127});//scrap more balls
-  //add scraper to hold balls here
-  pros::delay(1250);
-  scraper.set(true);
-  // pros::delay(150);
-  chassis.pid_wait_quick_chain(); 
-  chassis.pid_turn_set({-39.1_in,-30.2_in}, rev, 127);//turn to middle
-  chassis.pid_wait_quick_chain();
-  chassis.pid_odom_set({{-39.1_in, -30.2_in}, rev, 127});//go to middle used to be -38.6,-29.2
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(-2_in, 127);
-  topIntake.move(127);
-  middleIntake.move(127);
-  bottomIntake.move(127);
-  chassis.pid_wait_quick();
-  pros::delay(2000);
-  topIntake.move(0);
-  middleIntake.move(0);
-  bottomIntake.move(0);
-  chassis.pid_odom_set({{{0_in, -63.5_in}, fwd, 120}});//go towards match loader
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set({14_in, -65.5_in}, fwd, 127);//align to match loader
-  chassis.pid_wait_quick(); 
-  topIntake.move(-127);
-  middleIntake.move(127);
-  bottomIntake.move(127);
-  chassis.pid_odom_set({{15_in, -65.5_in}, fwd, 110});//scrape match loader
-  scraper.set(true);
-  // chassis.pid_wait_quick();
-  pros::delay(3000);
-  wings.set(true);                                                                                                                         
-  chassis.pid_odom_set({{-22_in, -65_in}, rev, 127});//go to long goal
-   topIntake.move(127);
-   pros::delay(90);
-   topIntake.move(-127);
-
-  pros::delay(780);
-  wings.set(false);
-  bottomIntake.move(127);
-  middleIntake.move(127);
-  topIntake.move(-127);
-  chassis.pid_wait();
-  pros::delay(5000);
-  chassis.pid_odom_set({{0_in, -65.5_in}, fwd, 127});//back away from goal
-  chassis.pid_wait();
-  chassis.pid_odom_set({{0_in, -44_in, 90_deg}, fwd, 90});
-  chassis.pid_wait();
-  chassis.pid_odom_set({{15_in, -15.5_in}, fwd, 127});
-
-}
   void long4middle3left() {//works well dont change
     doublePark.set(false);
   chassis.pid_odom_set({{0_in, 33_in},fwd, 100});//aligns with loader
@@ -1056,10 +934,7 @@ void blueColorSort() {
     pros::delay(100);
   }
 }
-void s() {
-  topIntake.move(127);
-  pros::delay(10000);
-}
+
 void redColorSort(bool middle) {
     int direction = -127; //negative is red, positive is blue
     if (optical.get_hue() > 350){
