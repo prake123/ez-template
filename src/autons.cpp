@@ -413,7 +413,8 @@ void wingRushRight(){
   wings.set(false);
   chassis.pid_turn_set(90_deg,127);
   chassis.pid_wait();
-  test();
+  chassis.pid_drive_set(12_in,90);
+  chassis.pid_wait();
 }                                                                   
 void test(){
   chassis.pid_odom_set({{-24.27_in,49.6_in},rev,90});
@@ -600,31 +601,6 @@ void long4middle3right() {//lowkey goated auton
   middleIntake.move(-127); //47.6,15.5
   topIntake.move(-127);
   pros::delay(5000);
-
-  //chassis.pid_odom_set({{17_in,-15_in}, fwd, 90});
-  
-  
-  // wings.set(true);
-  // bottomIntake.move(0);
-  // middleIntake.move(0); 
-  // topIntake.move(0);
-  // chassis.pid_wait();
-  // chassis.pid_odom_set({{-30.5_in, 1.5_in}, fwd, 90});
-  // pros::delay(700);
-  // chassis.pid_odom_set({{0_in, -62_in, 90_deg}, fwd, 90});
-  // scraper.set(true);
-  // chassis.pid_wait();
-  // chassis.pid_odom_set({{14_in, -62_in}, fwd, 90});
-  // pros::delay(20);
-  // chassis.pid_wait();
-  // bottomIntake.move(0);
-  // middleIntake.move(0);
-  // topIntake.move(0);  
-  // wings.set(false);
-  // chassis.pid_odom_set({{-20_in, -62_in}, rev, 90});
-  // longScoring();
-  // pros::delay(2000);
-  
 }
 
 
