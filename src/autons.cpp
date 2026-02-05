@@ -405,15 +405,19 @@ void wingRushRight(){
   scraper.set(false);
   //chassis.pid_wait();
   wings.set(false);
-  pros::delay(400);
-  chassis.pid_odom_set({{8.27_in,23.6_in},fwd,90});
+  pros::delay(900);
+  chassis.pid_drive_set(5_in,127);
   chassis.pid_wait();
-  wings.set(true);
+  chassis.pid_odom_set({{-12.27_in,49.6_in},fwd,90});
+  chassis.pid_wait();
+  wings.set(false);
   chassis.pid_turn_set(90_deg,127);
   chassis.pid_wait();
-  chassis.pid_drive_set(-12_in,90);
+  test();
 }                                                                   
-
+void test(){
+  chassis.pid_odom_set({{-24.27_in,49.6_in},rev,90});
+}
 void autonSkills() {//needs to be tuned for alignment and changed in future for higher scores
   scraper.set(true);
   wings.set(true);

@@ -26,3 +26,4 @@ void long7Left();
 void jank();
 void intakeTorque();
 void wingRushRight();
+void test();

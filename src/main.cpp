@@ -264,20 +264,16 @@ void opcontrol() {
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_vel+-9885ocity());
   pros::lcd::print(6, "Lebron");
   master.print(0, 0, "X: %.2f Y: %.2f", chassis.odom_x_get(), chassis.odom_y_get());
-    //chassis.opcontrol_tank();  // Tank control
-     //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-    // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
-    // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
-    // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
+    
 
-    /*if(master.get_digital(DIGITAL_B)){
+    if(master.get_digital(DIGITAL_L1)){
       wings.set(true);
     }
-    else{wings.set(false);}*/
+    else{wings.set(false);}
       // wings.button_toggle(master.get_digital((DIGITAL_B)));
       // pros::delay(24); //wings and hood toggle
       
-      wings.button_toggle(master.get_digital(DIGITAL_B));
+      
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
 
@@ -315,6 +311,7 @@ void opcontrol() {
       //else{
         //  chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
         // scale only the turning input
+        ================================================================================================
         const double TURN_SCALE = 0.8;  // 60% of normal turning speed
 
         double fwd = master.get_analog(ANALOG_LEFT_Y);    // forward/reverse (unchanged)
@@ -337,7 +334,7 @@ void opcontrol() {
         }
         chassis.drive_set(left_out, right_out);
       //}
-      
+      ====================================================================================================
 
       
     if (master.get_digital_new_press(DIGITAL_DOWN)) {//double park active set
@@ -374,19 +371,12 @@ void opcontrol() {
       topIntake.move(127); 
       middleIntake.move(-127);
     }
-    else if(master.get_digital(DIGITAL_L1)){
+    else if(master.get_digital(DIGITAL_B)){
       bottomIntake.move(127);
       topIntake.move(-127); 
       middleIntake.move(127);
       wings.set(true);
-    //   storingActive = !storingActive;
-    //   colorSort = false;
-    //   if(storingActive){//storing toggle when pressing L1
-    // bottomIntake.move(127);
-    // topIntake.move(127); 
-    // middleIntake.move(-127);
-    // wings.set(true);
-  //}
+    
     }
     else if (active) {
     runDoublePark(active);
