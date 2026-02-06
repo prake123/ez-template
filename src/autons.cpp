@@ -405,16 +405,17 @@ void wingRushRight(){
   scraper.set(false);
   //chassis.pid_wait();
   wings.set(false);
-  pros::delay(900);
+  pros::delay(1100);
   chassis.pid_drive_set(5_in,127);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-12.27_in,49.6_in},fwd,90});
+  chassis.pid_odom_set({{-12.27_in,49_in},fwd,90});
   chassis.pid_wait();
   wings.set(false);
   chassis.pid_turn_set(90_deg,127);
   chassis.pid_wait();
-  chassis.pid_drive_set(12_in,90);
+  chassis.pid_drive_set(-25_in,70);
   chassis.pid_wait();
+  pros::delay(10000);
 }                                                                   
 void test(){
   chassis.pid_odom_set({{-24.27_in,49.6_in},rev,90});
@@ -694,14 +695,14 @@ void sawp(){//works pretty well try not to change anything
   bottomIntake.move(127);
   chassis.pid_wait_quick();
   chassis.pid_odom_set({{19_in, 34.5_in}, fwd, 100});//at match loader
-  pros::delay(920);
+  pros::delay(930);
   wings.set(true);
   chassis.pid_odom_set({{-22_in, 35_in}, rev, 127});//long goal
   
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  pros::delay(910);
+  pros::delay(920);
   wings.set(false);
  
   scraper.set(false);
@@ -720,7 +721,7 @@ void sawp(){//works pretty well try not to change anything
   scraper.set(false);
    
   // chassis.pid_wait();
-  chassis.pid_odom_set({{-32.5_in, -32.5_in}, fwd, 127});//scrap more balls
+  chassis.pid_odom_set({{-28.5_in, -34_in}, fwd, 127});//scrap more balls
   //add scraper to hold balls here
   pros::delay(1320);
   scraper.set(true);
