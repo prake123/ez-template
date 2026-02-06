@@ -266,7 +266,7 @@ void opcontrol() {
   master.print(0, 0, "X: %.2f Y: %.2f", chassis.odom_x_get(), chassis.odom_y_get());
     
 
-    if(master.get_digital(DIGITAL_L1)){
+    if(master.get_digital(DIGITAL_L2)){
       wings.set(true);
     }
     else{wings.set(false);}
@@ -311,7 +311,7 @@ void opcontrol() {
       //else{
         //  chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
         // scale only the turning input
-        ================================================================================================
+       // ================================================================================================
         const double TURN_SCALE = 0.8;  // 60% of normal turning speed
 
         double fwd = master.get_analog(ANALOG_LEFT_Y);    // forward/reverse (unchanged)
@@ -334,7 +334,7 @@ void opcontrol() {
         }
         chassis.drive_set(left_out, right_out);
       //}
-      ====================================================================================================
+     // ====================================================================================================
 
       
     if (master.get_digital_new_press(DIGITAL_DOWN)) {//double park active set
@@ -366,12 +366,12 @@ void opcontrol() {
       colorSort = true;
       middle= true;
     } 
-    else if (master.get_digital(DIGITAL_L2)){
+    else if (master.get_digital(DIGITAL_B)){
       bottomIntake.move(-127);
       topIntake.move(127); 
       middleIntake.move(-127);
     }
-    else if(master.get_digital(DIGITAL_B)){
+    else if(master.get_digital(DIGITAL_L1)){
       bottomIntake.move(127);
       topIntake.move(-127); 
       middleIntake.move(127);
