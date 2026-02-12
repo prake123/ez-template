@@ -8,8 +8,8 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    { -2, 16, -12},     // Left Chassis Ports (negative port will reverse it!  -1)
-    {5, -14, 13},  // Right Chassis Ports (negative port will reverse it!)
+    { -2, 11, -12},     // Left Chassis Ports (negative port will reverse it!  -1)
+    {4, -14, 13},  // Right Chassis Ports (negative port will reverse it!)
 
     17,      // IMU Port
     3.375,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -21,7 +21,7 @@ ez::Drive chassis(
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
  //ez::tracking_wheel horiz_tracker(6, 2.00, 4.0);  // This tracking wheel is perpendicular to the drive wheels
- ez::tracking_wheel vert_tracker(17, 2.00, 3.5);   // This tracking wheel is parallel to the drive wheels
+ ez::tracking_wheel vert_tracker(6, 2.00, 3.5);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -60,8 +60,10 @@ void initialize() {
    ez::as::auton_selector.autons_add({
 
    
+    
     {"Skills", autonSkills}, 
-    {"Park Only", parkOnly}
+    {"Park Only", parkOnly},
+    {"PID", drive_example},
    
          
 
