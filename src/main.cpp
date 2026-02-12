@@ -247,6 +247,7 @@ void opcontrol() {
   bool storingActive = false; //storing macro
   bool colorSort = true; //color sort toggle
   bool middle = false; //color sort middle decision
+  int l1_timer = 0; //delay storing so that it doesn't outtake ball before hood can come
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
   while (true) {
     // Gives you some extras to make EZ-Template ezier
@@ -266,10 +267,14 @@ void opcontrol() {
   pros::lcd::print(6, "Lebron");
   master.print(0, 0, "X: %.2f Y: %.2f", chassis.odom_x_get(), chassis.odom_y_get());
     
-
+    /*  if(master.get_digital(DIGITAL_L2)){
+      wings.set(true);
+    }
+    else{wings.set(false);}*/
+    wings.set(master.get_digital(DIGITAL_L1) || master.get_digital(DIGITAL_L2));
     
-      wings.button_toggle(master.get_digital((DIGITAL_L2)));
-      pros::delay(24); //wings and hood toggle
+      //wings.button_toggle(master.get_digital((DIGITAL_L2)));
+      //pros::delay(24); //wings and hood toggle
       
       
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
@@ -299,8 +304,6 @@ void opcontrol() {
     // }    // last_wings = wings.get();
 
     
-      
-      pros::delay(24);
       //this is braking?
       //if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
       //  leftMotors.move(0);
@@ -348,6 +351,13 @@ void opcontrol() {
       bottomIntake.move(-40);
       pros::delay(90);//outake before scoring
     }
+    if(master.get_digital_new_press(DIGITAL_L1)){
+      wings.set(false);
+      topIntake.move(40);
+      middleIntake.move(-40);
+      bottomIntake.move(-40);
+      pros::delay(90);//outake before scoring
+    }
     if (master.get_digital(DIGITAL_R1)) { //long macro
        
       bottomIntake.move(127);
@@ -370,8 +380,7 @@ void opcontrol() {
       middleIntake.move(-127);
     }
     else if(master.get_digital(DIGITAL_L1)){
-      wings.set(true);
-      pros::delay(50);
+      //wings.set(true);
       bottomIntake.move(127);
       topIntake.move(-127); 
       middleIntake.move(127);
