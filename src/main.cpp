@@ -370,11 +370,11 @@ void opcontrol() {
       middleIntake.move(-127);
     }
     else if(master.get_digital(DIGITAL_L1)){
+      wings.set(true);
+      pros::delay(50);
       bottomIntake.move(127);
       topIntake.move(-127); 
       middleIntake.move(127);
-      wings.set(true);
-    
     }
     else if (active) {
     runDoublePark(active);
