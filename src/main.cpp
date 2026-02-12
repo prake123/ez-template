@@ -350,6 +350,20 @@ void opcontrol() {
       bottomIntake.move(-40);
       pros::delay(90);//outake before scoring
     }
+    if(master.get_digital_new_press(DIGITAL_R2)){
+      wings.set(false);
+      intakeLift.set(false);
+      topIntake.move(60);
+      middleIntake.move(-60);
+      bottomIntake.move(-127);
+      pros::delay(200);//outake before scoring
+    }
+    if(master.get_digital_new_press(DIGITAL_L2)){
+      topIntake.move(127);
+      middleIntake.move(-127);
+      bottomIntake.move(127);
+      pros::delay(200);//outake before scoring
+    }
     if (master.get_digital(DIGITAL_R1)) { //long macro
        
       bottomIntake.move(127);
@@ -359,14 +373,14 @@ void opcontrol() {
       middle = false;
     } 
     else if (master.get_digital(DIGITAL_R2)) { //middle macro
-       /*wings.set(false);
+       wings.set(false);
        intakeLift.set(false);
-      bottomIntake.move(127);
+      bottomIntake.move(100);
       topIntake.move(40);
-      middleIntake.move(70);
+      middleIntake.move(50);
       colorSort = true;
-      middle= true;*/
-      wings.set(false);
+      middle= true;
+      /*wings.set(false=-
     intakeLift.set(false);
     colorSort = true;
     middle = true;
@@ -385,7 +399,7 @@ void opcontrol() {
         bottomIntake.move(-40); 
         topIntake.move(-20); 
         middleIntake.move(-50);
-    }
+    }*/
     } 
     else if (master.get_digital(DIGITAL_DOWN)){
       intakeLift.set(false);
