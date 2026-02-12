@@ -395,6 +395,7 @@ void opcontrol() {
     }
     else if(master.get_digital(DIGITAL_L1)){
       intakeLift.set(false);
+      wings.set(true);
       bottomIntake.move(127);
       topIntake.move(-127); 
       middleIntake.move(127);
