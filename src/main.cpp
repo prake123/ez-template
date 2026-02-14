@@ -273,7 +273,7 @@ void opcontrol() {
       // wings.button_toggle(master.get_digital((DIGITAL_B)));
       // pros::delay(24); //wings and hood toggle
       
-      wings.button_toggle(master.get_digital(DIGITAL_B));
+      wings.button_toggle(master.get_digital(DIGITAL_L2));
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
 
@@ -351,18 +351,18 @@ void opcontrol() {
       pros::delay(90);//outake before scoring
     }
     if(master.get_digital_new_press(DIGITAL_R2)){
-      wings.set(false);
+      //wings.set(false);
       intakeLift.set(false);
-      topIntake.move(60);
-      middleIntake.move(-60);
+      topIntake.move(-60);
+      middleIntake.move(-90);
       bottomIntake.move(-127);
       pros::delay(200);//outake before scoring
     }
-    if(master.get_digital_new_press(DIGITAL_L2)){
-      topIntake.move(127);
+    if(master.get_digital_new_press(DIGITAL_B)){
+      topIntake.move(-127);
       middleIntake.move(-127);
       bottomIntake.move(127);
-      pros::delay(200);//outake before scoring
+      pros::delay(350);//outake before scoring
     }
     if (master.get_digital(DIGITAL_R1)) { //long macro
        
@@ -373,7 +373,7 @@ void opcontrol() {
       middle = false;
     } 
     else if (master.get_digital(DIGITAL_R2)) { //middle macro
-       wings.set(false);
+       //wings.set(false);
        intakeLift.set(false);
       bottomIntake.move(100);
       topIntake.move(40);
@@ -423,7 +423,7 @@ void opcontrol() {
     // wings.set(true);
   //}
     }
-    else if (master.get_digital(DIGITAL_L2)) {
+    else if (master.get_digital(DIGITAL_B)) {
     intakeLift.set(true);
     bottomIntake.move(-45);
     topIntake.move(20); 
