@@ -742,6 +742,9 @@ void sawp(){//works pretty well try not to change anything
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-2_in, 127);
   topIntake.move(127);
+  middleIntake.move(-127);
+  bottomIntake.move(-127);
+  topIntake.move(127);
   middleIntake.move(127);
   bottomIntake.move(127);
   chassis.pid_wait_quick();
