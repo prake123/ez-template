@@ -21,7 +21,7 @@ ez::Drive chassis(
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
  //ez::tracking_wheel horiz_tracker(6, 2.00, 4.0);  // This tracking wheel is perpendicular to the drive wheels
- ez::tracking_wheel vert_tracker(5, 2.00, 3.5);   // This tracking wheel is parallel to the drive wheels
+ ez::tracking_wheel vert_tracker(6, 2.00, 3.5);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -271,11 +271,14 @@ void opcontrol() {
       wings.set(true);
     }
     else{wings.set(false);}*/
-    wings.set(!master.get_digital(DIGITAL_L1) || !master.get_digital(DIGITAL_L2));
+    // wings.set(!master.get_digital(DIGITAL_L1) || !master.get_digital(DIGITAL_L2));
     
       //wings.button_toggle(master.get_digital((DIGITAL_L2)));
       //pros::delay(24); //wings and hood toggle
-      
+      if(master.get_digital(DIGITAL_L2) || master.get_digital(DIGITAL_R1)){
+        wings.set(false);
+      }
+      else{wings.set(true);}
       
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
@@ -352,7 +355,7 @@ void opcontrol() {
       pros::delay(90);//outake before scoring
     }
     if(master.get_digital_new_press(DIGITAL_L1)){
-      wings.set(false);
+      //wings.set(false);
       topIntake.move(40);
       middleIntake.move(-40);
       bottomIntake.move(-40);
