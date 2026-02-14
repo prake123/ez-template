@@ -379,23 +379,35 @@ void measure_offsets() {
 // Make your own autonomous functions here!
 // . . .
 void parkOnly(){
+  chassis.pid_wait_quick();
   chassis.pid_drive_set(-16_in, 127);
   chassis.pid_wait();
   chassis.pid_drive_set(30_in, 127);
   chassis.pid_wait();
   chassis.pid_drive_set(20_in,127);
 }
+void edge(){
+  chassis.pid_wait_quick();
+  wings.set(true);
+  chassis.pid_drive_set(-5_in,127);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(7_in, 127);
+  chassis.pid_wait_quick();
+}
 void autonSkills() {//needs to be tuned for alignment and changed in future for higher scores
   scraper.set(true);
   wings.set(true);
-  chassis.pid_odom_set({{0_in, 35_in},fwd, 90});
+  chassis.pid_odom_set({{0_in, 34_in},fwd, 90});
   chassis.pid_wait();
+  chassis.pid_turn_set(90,90);
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  chassis.pid_odom_set({{14_in, 35_in}, fwd, 90});
+  chassis.pid_wait();
+  chassis.pid_odom_set({{18.7_in, 34_in}, fwd, 120});
   chassis.pid_wait();
   chassis.pid_turn_set(90_deg, 127);
+  edge();
   pros::delay(2000);
   chassis.pid_wait();
   chassis.pid_odom_set({{0_in, 35_in,-90_deg}, rev, 90});
@@ -408,9 +420,9 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
   chassis.pid_odom_set({{-97_in, 20_in}, fwd, 120});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-97_in, 36_in}, fwd, 90});
+  chassis.pid_odom_set({{-97_in, 34_in}, fwd, 90});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-76_in, 36_in}, rev, 90});//moving to other side and scoring
+  chassis.pid_odom_set({{-76_in, 34_in}, rev, 90});//moving to other side and scoring
   chassis.pid_wait();
   topIntake.move(-127);
   middleIntake.move(127);
@@ -418,9 +430,9 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   wings.set(false);
   scraper.set(true);
   pros::delay(2000);
-  wings.set(true);
   chassis.pid_wait();//47.6,15.5
-  chassis.pid_odom_set({{-111_in, 35_in}, fwd, 100});//scraping
+  chassis.pid_odom_set({{-111_in, 35_in}, fwd, 110});//scraping
+  edge();
   pros::delay(2000); //changed from 2500
   chassis.pid_wait();
   chassis.pid_odom_set({{-76_in, 35_in}, rev, 90});//scoring
@@ -437,8 +449,8 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{-114_in, -64.6_in}, fwd, 100});//scraping
-  chassis.pid_odom_set({{-114_in, -64_in}, fwd, 100}); //NEW LINE FOR SCRAPING
-
+  chassis.pid_odom_set({{-114_in, -64_in}, fwd, 110}); //NEW LINE FOR SCRAPING
+  edge();
   pros::delay(2000);
   chassis.pid_wait();
   wings.set(true);
@@ -462,8 +474,8 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{14_in, -68.8_in}, fwd, 90});//going to scraper
-  chassis.pid_odom_set({{14_in, -68_in}, fwd, 90}); //NEW LINE FOR GOING TO SCRAPER
-
+  chassis.pid_odom_set({{14_in, -68_in}, fwd, 110}); //NEW LINE FOR GOING TO SCRAPER
+  edge();
   chassis.pid_wait();
   pros::delay(2000); //changed from 2500
 
