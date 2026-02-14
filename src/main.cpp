@@ -271,7 +271,7 @@ void opcontrol() {
       wings.set(true);
     }
     else{wings.set(false);}*/
-    wings.set(master.get_digital(DIGITAL_L1) || master.get_digital(DIGITAL_L2));
+    wings.set(!master.get_digital(DIGITAL_L1) || !master.get_digital(DIGITAL_L2));
     
       //wings.button_toggle(master.get_digital((DIGITAL_L2)));
       //pros::delay(24); //wings and hood toggle
