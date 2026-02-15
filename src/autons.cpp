@@ -556,10 +556,11 @@ void long4middle3right() {//lowkey goated auton
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  scraper.set(false);
-  //chassis.pid_wait();
-  wings.set(false);
   pros::delay(1000);
+  scraper.set(false);
+  /*chassis.pid_wait();
+  wings.set(false);
+  pros::delay(100);
   topIntake.move(127);
   middleIntake.move(-127);
   bottomIntake.move(-127);
@@ -567,7 +568,7 @@ void long4middle3right() {//lowkey goated auton
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  pros::delay(1250);
+  pros::delay(1250);*/
   //chassis.pid_odom_set({{-17_in, 36.3_in}, fwd, 60});
   chassis.pid_odom_set({{-9_in, 36.3_in}, fwd, 90});
   chassis.pid_wait();
@@ -576,11 +577,11 @@ void long4middle3right() {//lowkey goated auton
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  chassis.pid_odom_set({{-31.5_in, 5.5_in}, fwd, 50});
+  chassis.pid_odom_set({{-31.5_in, 4.5_in}, fwd, 70});
   pros::delay(1100);
-  /*scraper.set(true); //it works without scraper since i slowed it from 70 to 50
+  scraper.set(true); //it works without scraper since i slowed it from 70 to 50
   pros::delay(250);
-  scraper.set(false);*/
+  scraper.set(false);
   chassis.pid_wait();
   //chassis.pid_odom_set({{-26_in, 38_in}, fwd, 90});
   chassis.pid_wait();

@@ -88,6 +88,7 @@ void initialize() {
  */
 void disabled() {
   // . . .
+  //wings.set(false);
 }
 
 /**
