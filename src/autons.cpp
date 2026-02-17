@@ -423,24 +423,39 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
   chassis.pid_odom_set({{-97_in, 34_in}, fwd, 90});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-76_in, 34_in}, rev, 90});//moving to other side and scoring
+  chassis.pid_odom_set({{-74_in, 34_in}, rev, 90});//moving to other side and scoring
   chassis.pid_wait();
+  wings.set(false);
+  scraper.set(true);
+
+  // anti-jam
+  topIntake.move(127);
+  middleIntake.move(-127);
+  bottomIntake.move(-127);
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
-  wings.set(false);
-  scraper.set(true);
+
   pros::delay(2000);
   chassis.pid_wait();//47.6,15.5
   wings.set(true);
-  chassis.pid_odom_set({{-111_in, 35_in}, fwd, 110});//scraping
-  //edge();
+  chassis.pid_odom_set({{-111_in, 35_in}, fwd, 90});//scraping
+  edge();
   pros::delay(2000); //changed from 2500
   chassis.pid_wait();
   chassis.pid_odom_set({{-76_in, 35_in}, rev, 90});//scoring
   chassis.pid_wait();
   wings.set(false);
   scraper.set(false);
+
+  // anti-jam
+  topIntake.move(127);
+  middleIntake.move(-127);
+  bottomIntake.move(-127);
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+
   pros::delay(1900);
   chassis.pid_wait();
   chassis.pid_odom_set({{-87_in, 35_in}, fwd, 90});//reversing
@@ -451,8 +466,8 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{-114_in, -64.6_in}, fwd, 100});//scraping
-  chassis.pid_odom_set({{-114_in, -64_in}, fwd, 110}); //NEW LINE FOR SCRAPING
-  //edge();
+  chassis.pid_odom_set({{-114_in, -65_in}, fwd, 90}); //NEW LINE FOR SCRAPING
+  edge();
   pros::delay(2000);
   chassis.pid_wait();
   wings.set(true);
@@ -470,14 +485,23 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
 
   chassis.pid_wait();
   wings.set(false);
+
+  // anti-jam
+  topIntake.move(127);
+  middleIntake.move(-127);
+  bottomIntake.move(-127);
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+
   pros::delay(2000);
   wings.set(true);
   scraper.set(true);
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{14_in, -68.8_in}, fwd, 90});//going to scraper
-  chassis.pid_odom_set({{14_in, -68_in}, fwd, 110}); //NEW LINE FOR GOING TO SCRAPER
-  //edge();
+  chassis.pid_odom_set({{14_in, -68_in}, fwd, 90}); //NEW LINE FOR GOING TO SCRAPER
+  edge();
   chassis.pid_wait();
   pros::delay(2000); //changed from 2500
 
@@ -488,6 +512,15 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   wings.set(false);
   scraper.set(false);
   chassis.pid_wait();
+
+  // anti-jam
+  topIntake.move(127);
+  middleIntake.move(-127);
+  bottomIntake.move(-127);
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+
   pros::delay(2000);
   chassis.pid_odom_set({{0.734_in, -64.832_in}, fwd, 127});//jank parking route try to fix if you have time
   chassis.pid_wait();
