@@ -88,7 +88,7 @@ void initialize() {
  */
 void disabled() {
   // . . .
-  //wings.set(false);
+  wings.set(false);
 }
 
 /**
@@ -317,7 +317,7 @@ void opcontrol() {
         //  chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
         // scale only the turning input
        // ================================================================================================
-        const double TURN_SCALE = 0.6;  // 60% of normal turning speed
+        const double TURN_SCALE = 0.5;  // 60% of normal turning speed
 
         double fwd = master.get_analog(ANALOG_LEFT_Y);    // forward/reverse (unchanged)
         double turn = master.get_analog(ANALOG_RIGHT_X); // turning
