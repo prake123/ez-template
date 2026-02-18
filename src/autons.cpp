@@ -724,13 +724,13 @@ void sawp(){//works pretty well try not to change anything
   topIntake.move(-127); 
   middleIntake.move(127);
   bottomIntake.move(127);
-  pros::delay(1200);
+  pros::delay(1350);
   scraper.set(true);
   pros::delay(450);
   scraper.set(false);
    
-  // chassis.pid_wait();
-  chassis.pid_odom_set({{-24.5_in, -35.5_in}, fwd, 127});//scrap more balls
+  chassis.pid_wait();
+  chassis.pid_odom_set({{-23.5_in, -35.5_in}, fwd, 127});//scrap more balls
   //add scraper to hold balls here
   pros::delay(1320);
 
@@ -740,7 +740,7 @@ void sawp(){//works pretty well try not to change anything
   chassis.pid_turn_set(-225_deg, 127);//turn to middle
   chassis.pid_wait_quick(); 
   // chassis.pid_odom_set({{-39.1_in, -30.2_in}, rev, 127});//go to middle used to be -38.6,-29.2
-  chassis.pid_drive_set(-14_in, 127); // changed from -15
+  chassis.pid_drive_set(-13_in, 127); // changed from -15
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-2_in, 127);
   topIntake.move(127);
