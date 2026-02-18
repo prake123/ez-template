@@ -456,7 +456,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   pros::delay(2000);
   wings.set(true);
   chassis.pid_wait();//47.6,15.5
-  chassis.pid_odom_set({{-111_in, 35_in}, fwd, 100});//scraping
+  chassis.pid_odom_set({{-111_in, 35_in}, fwd, 90});//scraping
   pros::delay(2500);
   chassis.pid_wait();
   chassis.pid_odom_set({{-76_in, 35_in}, rev, 90});//scoring
@@ -589,7 +589,7 @@ void long4middle3right() {//lowkey goated auton
   middleIntake.move(0); 
   topIntake.move(0);  
   wings.set(false);
-  chassis.pid_odom_set({{-36.81_in, -5_in}, fwd, 90});
+  chassis.pid_odom_set({{-37.81_in, -5_in}, fwd, 90});
   chassis.pid_wait_quick();
   chassis.pid_turn_set(-135_deg,127);
   chassis.pid_wait();
@@ -739,7 +739,7 @@ void sawp(){//works pretty well try not to change anything
   chassis.pid_turn_set(-225_deg, 127);//turn to middle
   chassis.pid_wait_quick(); 
   // chassis.pid_odom_set({{-39.1_in, -30.2_in}, rev, 127});//go to middle used to be -38.6,-29.2
-  chassis.pid_drive_set(-15_in, 127);
+  chassis.pid_drive_set(-14_in, 127); // changed from -15
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-2_in, 127);
   topIntake.move(127);
@@ -771,7 +771,7 @@ void sawp(){//works pretty well try not to change anything
   // scrape match loader
   scraper.set(true);
   // chassis.pid_wait_quick()8
-  pros::delay(900);
+  pros::delay(1050);
   wings.set(true);                                                                                                                         
   chassis.pid_odom_set({{-22_in, -65.5_in}, rev, 127});//go to long goal
   topIntake.move(127);
