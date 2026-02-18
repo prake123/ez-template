@@ -466,7 +466,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{-114_in, -64.6_in}, fwd, 100});//scraping
-  chassis.pid_odom_set({{-114_in, -65_in}, fwd, 90}); //NEW LINE FOR SCRAPING
+  chassis.pid_odom_set({{-114_in, -65_in}, fwd, 85}); //NEW LINE FOR SCRAPING
   edge();
   pros::delay(2000);
   chassis.pid_wait();
@@ -481,7 +481,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{-22_in, -68.8_in}, rev, 90});//scoring at long goal
-  chassis.pid_odom_set({{-22_in, -68_in}, rev, 90}); //NEW LINE FOR SCORING AT LONG GOAL
+  chassis.pid_odom_set({{-22_in, -69.5_in}, rev, 90}); //NEW LINE FOR SCORING AT LONG GOAL
 
   chassis.pid_wait();
   wings.set(false);
@@ -500,13 +500,13 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{14_in, -68.8_in}, fwd, 90});//going to scraper
-  chassis.pid_odom_set({{14_in, -68_in}, fwd, 90}); //NEW LINE FOR GOING TO SCRAPER
+  chassis.pid_odom_set({{14_in, -69_in}, fwd, 90}); //NEW LINE FOR GOING TO SCRAPER
   edge();
   chassis.pid_wait();
-  pros::delay(2000); //changed from 2500
+  pros::delay(1300); //changed from 2500
 
   //chassis.pid_odom_set({{-22.13_in, -67.5_in}, rev, 120});//going back to long goal
-  chassis.pid_odom_set({{-22.13_in, -67.5_in}, rev, 120});//NEW LINE FOR GOING BACK TO LONG GOAL
+  chassis.pid_odom_set({{-22.13_in, -69.5_in}, rev, 120});//NEW LINE FOR GOING BACK TO LONG GOAL
 
   chassis.pid_wait();
   wings.set(false);
@@ -521,7 +521,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   middleIntake.move(127);
   bottomIntake.move(127);
 
-  pros::delay(2000);
+  pros::delay(1500);
   chassis.pid_odom_set({{0.734_in, -64.832_in}, fwd, 127});//jank parking route try to fix if you have time
   chassis.pid_wait();
   chassis.pid_odom_set({{18.588_in, -34.411_in}, fwd, 127});
