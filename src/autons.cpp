@@ -404,7 +404,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   middleIntake.move(127);
   bottomIntake.move(127);
   chassis.pid_wait();
-  chassis.pid_odom_set({{19.5_in, 34_in}, fwd, 90});
+  chassis.pid_odom_set({{19.5_in, 34_in}, fwd, 80});
   chassis.pid_wait();
   chassis.pid_turn_set(90_deg, 127);
   pros::delay(2000);
@@ -443,7 +443,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   edge();
   pros::delay(2000); //changed from 2500
   chassis.pid_wait();
-  chassis.pid_odom_set({{-76_in, 35_in}, rev, 90});//scoring
+  chassis.pid_odom_set({{-76_in, 34_in}, rev, 90});//scoring
   chassis.pid_wait();
   wings.set(false);
   scraper.set(false);
