@@ -589,9 +589,9 @@ void long4middle3right() {//lowkey goated auton
   middleIntake.move(0); 
   topIntake.move(0);  
   wings.set(false);
-  chassis.pid_odom_set({{-37.81_in, -5_in}, fwd, 90});
+  chassis.pid_odom_set({{-37.81_in, -5_in,-135_deg}, fwd, 90});
   chassis.pid_wait_quick();
-  chassis.pid_turn_set(-135_deg,127);
+  // chassis.pid_turn_set(-135_deg,127);
   chassis.pid_wait();
   chassis.pid_drive_set(-2_in, 70);
   chassis.pid_wait();
@@ -693,7 +693,7 @@ void sawp(){//works pretty well try not to change anything
   
   chassis.pid_wait_quick();
   doublePark.set(false);
-  chassis.pid_odom_set({{0_in, 32_in},fwd, 127});
+  chassis.pid_odom_set({{0_in, 34_in},fwd, 127});
   scraper.set(true);
   wings.set(true);
   chassis.pid_wait_quick();
@@ -702,7 +702,7 @@ void sawp(){//works pretty well try not to change anything
   middleIntake.move(127);
   bottomIntake.move(127);
   chassis.pid_wait_quick();
-  chassis.pid_odom_set({{17_in, 32_in}, fwd, 100});//at match loader
+  chassis.pid_odom_set({{17_in, 34_in}, fwd, 100});//at match loader
   pros::delay(1050);
   wings.set(true);
   chassis.pid_odom_set({{-20_in, 34.5_in}, rev, 100});//long goal
@@ -719,6 +719,7 @@ void sawp(){//works pretty well try not to change anything
   pros::delay(1300);
   chassis.pid_odom_set({{{-3_in, 36.3_in}, fwd, 127},
                        {{-30.5_in, 3.5_in}, fwd, 90}});//scrape balls
+        
   wings.set(true);
   topIntake.move(-127); 
   middleIntake.move(127);
@@ -729,7 +730,7 @@ void sawp(){//works pretty well try not to change anything
   scraper.set(false);
    
   // chassis.pid_wait();
-  chassis.pid_odom_set({{-26.5_in, -35.5_in}, fwd, 127});//scrap more balls
+  chassis.pid_odom_set({{-24.5_in, -35.5_in}, fwd, 127});//scrap more balls
   //add scraper to hold balls here
   pros::delay(1320);
 
