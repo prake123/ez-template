@@ -407,9 +407,9 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_odom_set({{19.5_in, 34_in}, fwd, 80});
   chassis.pid_wait();
   chassis.pid_turn_set(90_deg, 127);
-  pros::delay(2000);
-  edge();
   pros::delay(1000);
+  edge();
+  pros::delay(200);
   chassis.pid_wait();
   chassis.pid_odom_set({{0_in, 35_in,-90_deg}, rev, 90});
   chassis.pid_wait();
@@ -441,7 +441,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   wings.set(true);
   chassis.pid_odom_set({{-111_in, 35_in}, fwd, 90});//scraping
   edge();
-  pros::delay(2000); //changed from 2500
+  pros::delay(500); //changed from 2500
   chassis.pid_wait();
   chassis.pid_odom_set({{-76_in, 34_in}, rev, 90});//scoring
   chassis.pid_wait();
@@ -466,9 +466,9 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{-114_in, -64.6_in}, fwd, 100});//scraping
-  chassis.pid_odom_set({{-114_in, -65_in}, fwd, 85}); //NEW LINE FOR SCRAPING
+  chassis.pid_odom_set({{-114_in, -66_in}, fwd, 85}); //NEW LINE FOR SCRAPING
   edge();
-  pros::delay(2000);
+  pros::delay(1100);
   chassis.pid_wait();
   wings.set(true);
   chassis.pid_odom_set({{-95_in, -60.5_in}, rev, 90});//reversing to other side
@@ -481,7 +481,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{-22_in, -68.8_in}, rev, 90});//scoring at long goal
-  chassis.pid_odom_set({{-22_in, -69.5_in}, rev, 90}); //NEW LINE FOR SCORING AT LONG GOAL
+  chassis.pid_odom_set({{-22_in, -68.5_in}, rev, 90}); //NEW LINE FOR SCORING AT LONG GOAL
 
   chassis.pid_wait();
   wings.set(false);
@@ -500,13 +500,13 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
 
   //chassis.pid_odom_set({{14_in, -68.8_in}, fwd, 90});//going to scraper
-  chassis.pid_odom_set({{14_in, -69_in}, fwd, 90}); //NEW LINE FOR GOING TO SCRAPER
+  chassis.pid_odom_set({{14_in, -68_in}, fwd, 90}); //NEW LINE FOR GOING TO SCRAPER
   edge();
   chassis.pid_wait();
   pros::delay(1300); //changed from 2500
 
   //chassis.pid_odom_set({{-22.13_in, -67.5_in}, rev, 120});//going back to long goal
-  chassis.pid_odom_set({{-22.13_in, -69.5_in}, rev, 120});//NEW LINE FOR GOING BACK TO LONG GOAL
+  chassis.pid_odom_set({{-22.13_in, -68.5_in}, rev, 120});//NEW LINE FOR GOING BACK TO LONG GOAL
 
   chassis.pid_wait();
   wings.set(false);
@@ -523,12 +523,13 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
 
   pros::delay(1500);
   chassis.pid_odom_set({{0.734_in, -64.832_in}, fwd, 127});//jank parking route try to fix if you have time
-  chassis.pid_wait();
+  chassis.pid_wait_quick_chain();
   chassis.pid_odom_set({{18.588_in, -34.411_in}, fwd, 127});
-  chassis.pid_wait();
+  chassis.pid_wait_quick_chain();
   scraper.set(true);
   chassis.pid_odom_set({{18.588_in, -11.4235_in}, fwd, 127});
   scraper.set(false);
+  chassis.pid_wait();
   pros::delay(10000);
 }
 
