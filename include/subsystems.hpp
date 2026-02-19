@@ -18,3 +18,5 @@ extern Drive chassis;
  inline ez::Piston intakeLift('E');  
  inline pros ::Optical optical ( 8 );
  inline pros::Distance distancesensor(3);
+ inline pros::Distance front_distance(3);
+ inline pros::Distance side_distance(4);

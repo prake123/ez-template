@@ -9,6 +9,8 @@
 const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 90;
 const int SWING_SPEED = 110;
+const double front_sensor_offset = 3.25;  // This is the distance from the front of the robot to the center of the front distance sensor, used for odom calculations
+const double side_sensor_offset = 3.25;   // This is the distance from the side of the robot to the center of the side distance sensor, used for odom calculations
 
 ///
 // Constants
@@ -110,95 +112,22 @@ void drive_and_turn() {
 ///
 // Wait Until and Changing Max Speed
 ///
-void wait_until_change_speed() {
-  // pid_wait_until will wait until the robot gets to a desired position
-  // When the robot gets to 6 inches slowly, the robot will travel the remaining distance at full speed
-  chassis.pid_drive_set(24_in, 30, true);
-  chassis.pid_wait_until(6_in);
-  chassis.pid_speed_max_set(DRIVE_SPEED);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
-  chassis.pid_wait();
 
-  chassis.pid_turn_set(45_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_turn_set(-45_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_turn_set(0_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  // When the robot gets to -6 inches slowly, the robot will travel the remaining distance at full speed
-  chassis.pid_drive_set(-24_in, 30, true);
-  chassis.pid_wait_until(-6_in);
-  chassis.pid_speed_max_set(DRIVE_SPEED);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
-  chassis.pid_wait();
-}
 
 ///
 // Swing Example
 ///
-void swing_example() {
-  // The first parameter is ez::LEFT_SWING or ez::RIGHT_SWING
-  // The second parameter is the target in degrees
-  // The third parameter is the speed of the moving side of the drive
-  // The fourth parameter is the speed of the still side of the drive, this allows for wider arcs
 
-  chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, SWING_SPEED, 45);
-  chassis.pid_wait();
-
-  chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, SWING_SPEED, 45);
-  chassis.pid_wait();
-
-  chassis.pid_swing_set(ez::RIGHT_SWING, 45_deg, SWING_SPEED, 45);
-  chassis.pid_wait();
-
-  chassis.pid_swing_set(ez::LEFT_SWING, 0_deg, SWING_SPEED, 45);
-  chassis.pid_wait();
-}
 
 ///
 // Motion Chaining
 ///
-void motion_chaining() {
-  // Motion chaining is where motions all try to blend together instead of individual movements.
-  // This works by exiting while the robot is still moving a little bit.
-  // To use this, replace pid_wait with pid_wait_quick_chain.
-  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
 
-  chassis.pid_turn_set(45_deg, TURN_SPEED);
-  chassis.pid_wait_quick_chain();
-
-  chassis.pid_turn_set(-45_deg, TURN_SPEED);
-  chassis.pid_wait_quick_chain();
-
-  chassis.pid_turn_set(0_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  // Your final motion should still be a normal pid_wait
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-}
 
 ///
 // Auto that tests everything
 ///
-void combining_movements() {
-  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
 
-  chassis.pid_turn_set(45_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_swing_set(ez::RIGHT_SWING, -45_deg, SWING_SPEED, 45);
-  chassis.pid_wait();
-
-  chassis.pid_turn_set(0_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-}
 
 ///
 // Interference example
@@ -241,37 +170,12 @@ void interfered_example() {
 ///
 // Odom Drive PID
 ///
-void odom_drive_example() {
-  // This works the same as pid_drive_set, but it uses odom instead!
-  // You can replace pid_drive_set with pid_odom_set and your robot will
-  // have better error correction.
 
-  chassis.pid_odom_set(24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-
-  chassis.pid_odom_set(-12_in, DRIVE_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_odom_set(-12_in, DRIVE_SPEED);
-  chassis.pid_wait();
-}
 
 ///
 // Odom Pure Pursuit
 ///
-void odom_pure_pursuit_example() {
-  // Drive to 0, 30 and pass through 6, 10 and 0, 20 on the way, with slew
-  chassis.pid_odom_set({{{6_in, 10_in}, fwd, DRIVE_SPEED},
-                        {{0_in, 20_in}, fwd, DRIVE_SPEED},
-                        {{0_in, 30_in}, fwd, DRIVE_SPEED}},
-                       true);
-  chassis.pid_wait();
 
-  // Drive to 0, 0 backwards
-  chassis.pid_odom_set({{0_in, 0_in}, rev, DRIVE_SPEED},
-                       true);
-  chassis.pid_wait();
-}
 
 ///
 // Odom Pure Pursuit Wait Until
@@ -378,6 +282,18 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
+
+void xy_reset(double field_length = 144.0, double field_width = 144.0) {
+
+  double side_dist = side_distance.get() / 25.4;
+  double front_dist = front_distance.get() / 25.4;
+
+  double x_pos = side_dist + side_sensor_offset;
+  double y_pos = front_dist + front_sensor_offset;
+
+  chassis.odom_xyt_set(x_pos, y_pos, chassis.odom_pose_get().theta);
+}
+
 void parkOnly(){
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-16_in, 127);
