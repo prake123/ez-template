@@ -9,8 +9,8 @@
 const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 90;
 const int SWING_SPEED = 110;
-const double front_sensor_offset = 3.25;  // This is the distance from the front of the robot to the center of the front distance sensor, used for odom calculations
-const double side_sensor_offset = 3.25;   // This is the distance from the side of the robot to the center of the side distance sensor, used for odom calculations
+const double right_sensor_offset = 3.25;  // This is the distance from the front of the robot to the center of the front distance sensor, used for odom calculations
+const double left_sensor_offset = 3.25;   // This is the distance from the side of the robot to the center of the side distance sensor, used for odom calculations
 
 ///
 // Constants
@@ -282,17 +282,23 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
-
-void xy_reset(double field_length = 144.0, double field_width = 144.0) {
-
-  double side_dist = side_distance.get() / 25.4;
-  double front_dist = front_distance.get() / 25.4;
-
-  double x_pos = side_dist + side_sensor_offset;
-  double y_pos = front_dist + front_sensor_offset;
-
-  chassis.odom_xyt_set(x_pos, y_pos, chassis.odom_pose_get().theta);
+//distance reset for odom
+//to reset y axis you have to face sideways, and to reset x axis you have to face forwards.
+void distanceReset(string axis, const double field_length = 144.0){
+  if(axis == "x"){
+    int left = left_distance.get()/25.4 + left_sensor_offset;
+    int right = right_distance.get()/25.4 + right_sensor_offset;
+    int x = (left + field_length - right)/2;
+    chassis.odom_xyt_set(x, chassis.odom_y_get(), chassis.odom_theta_get());
+  }
+  else if(axis == "y"){
+    int left = left_distance.get()/25.4 + left_sensor_offset;
+    int right = right_distance.get()/25.4 + right_sensor_offset;
+    int y = (left + field_length - right)/2;
+    chassis.odom_xyt_set(chassis.odom_x_get(), y, chassis.odom_theta_get());
+  }
 }
+
 
 void parkOnly(){
   chassis.pid_wait_quick();
@@ -448,7 +454,9 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   chassis.pid_wait();
   pros::delay(10000);
 }
-
+void autonSkillsplus(){
+  chassis.pid_odom_set({{{0_in, 34_in},fwd, 90}});
+}
 
 void blueColorSort() {
   while (true){
