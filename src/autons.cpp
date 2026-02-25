@@ -455,7 +455,7 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   pros::delay(10000);
 }
 void autonSkillsplus(){
-  chassis.pid_odom_set({{{0_in, 34_in},fwd, 90}});
+  chassis.pid_odom_set({{{_in, _in},fwd, 90}});
 }
 
 void blueColorSort() {
