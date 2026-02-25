@@ -11,7 +11,8 @@ const int TURN_SPEED = 90;
 const int SWING_SPEED = 110;
 const double right_sensor_offset = 3.25;  // This is the distance from the front of the robot to the center of the front distance sensor, used for odom calculations
 const double left_sensor_offset = 3.25;   // This is the distance from the side of the robot to the center of the side distance sensor, used for odom calculations
-
+const string x = "x";
+const string y = "y";
 ///
 // Constants
 ///
@@ -285,16 +286,21 @@ void measure_offsets() {
 //distance reset for odom
 //to reset y axis you have to face sideways, and to reset x axis you have to face forwards.
 void distanceReset(string axis, const double field_length = 144.0){
+  double x,y;
   if(axis == "x"){
-    int left = left_distance.get()/25.4 + left_sensor_offset;
-    int right = right_distance.get()/25.4 + right_sensor_offset;
-    int x = (left + field_length - right)/2;
+    double left = left_distance.get()/25.4 + left_sensor_offset;
+    double right = right_distance.get()/25.4 + right_sensor_offset;
+    if(chassis.odom_theta_get() > -5 || chassis.odom_theta_get() < 5){
+      x = (left + field_length - right)/2;}
+    else{x = (right + field_length - left)/2;}
     chassis.odom_xyt_set(x, chassis.odom_y_get(), chassis.odom_theta_get());
   }
   else if(axis == "y"){
-    int left = left_distance.get()/25.4 + left_sensor_offset;
-    int right = right_distance.get()/25.4 + right_sensor_offset;
-    int y = (left + field_length - right)/2;
+    double left = left_distance.get()/25.4 + left_sensor_offset;
+    double right = right_distance.get()/25.4 + right_sensor_offset;
+    if(chassis.odom_theta_get() > -95 || chassis.odom_theta_get() < -85){
+      y = (left + field_length - right)/2;}
+    else{y = (right + field_length - left)/2;}
     chassis.odom_xyt_set(chassis.odom_x_get(), y, chassis.odom_theta_get());
   }
 }
@@ -311,6 +317,7 @@ void parkOnly(){
 void edge(){
   chassis.pid_wait_quick();
   wings.set(true);
+  distanceReset(x);
   chassis.pid_drive_set(-5_in,127);
   chassis.pid_wait_quick();
   chassis.pid_drive_set(7_in, 127);
@@ -455,7 +462,116 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   pros::delay(10000);
 }
 void autonSkillsplus(){
-  chassis.pid_odom_set({{{0_in, 34_in},fwd, 90}});
+  bottomIntake.move(127);
+  middleIntake.move(127); 
+  topIntake.move(-127);
+  wings.set(true);
+  chassis.pid_drive_set(30_in,127);
+  chassis.pid_wait();
+  distanceReset(y);
+  pros::delay(50);
+  chassis.pid_turn_set(90_deg, 127);
+  chassis.pid_wait();
+  chassis.pid_drive_set(10,127);
+  chassis.pid_wait();
+  distanceReset(x);
+  pros::delay(50);
+  chassis.pid_odom_set({{44_in, 41_in}, fwd, 127});
+  chassis.pid_wait();
+  chassis.pid_turn_relative_set(-180_deg, 127);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{57_in, 57_in}, rev, 127});
+  chassis.pid_wait();
+  bottomIntake.move(127);
+  middleIntake.move(127); 
+  topIntake.move(127);  
+  pros::delay(400);
+  bottomIntake.move(50);
+  middleIntake.move(50); 
+  topIntake.move(50);
+  pros::delay(400);
+  chassis.pid_odom_set({{24_in, 23_in}, fwd, 127});
+  chassis.pid_wait();
+  chassis.pid_turn_set(-90_deg, 127);
+  distanceReset(x);
+  pros::delay(50);
+  chassis.pid_odom_set({{24_in, 8_in}, fwd, 127});
+  chassis.pid_wait();
+  edge();
+  chassis.pid_odom_set({{24_in, 27_in}, rev, 127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{15_in, 34_in}, rev, 127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{12_in, 44_in}, rev, 127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{12_in, 56_in}, rev, 127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{14_in, 18_in}, rev, 127});
+  chassis.pid_wait();
+  chassis.pid_odom_set({{24_in, 115_in}, rev, 127});
+  chassis.pid_wait();
+  chassis.pid_turn_set(0_deg, 127);
+  chassis.pid_odom_set({{24_in, 100_in}, rev, 127});
+  chassis.pid_wait();
+  wings.set(false);
+  pros::delay(1800);
+  distanceReset(x);
+  pros::delay(50);
+  chassis.pid_odom_set({{25_in, 129_in}, fwd, 127});
+  chassis.pid_wait();
+  wings.set(true);
+  edge();
+  chassis.pid_odom_set({{24_in, 100_in}, rev, 127});
+  chassis.pid_wait();
+  wings.set(false);
+  pros::delay(1800);
+  chassis.pid_odom_set({{24_in, 110_in}, fwd, 127});
+  chassis.pid_wait();
+  chassis.pid_turn_set(180_deg, 127);
+  chassis.pid_wait();
+  chassis.pid_drive_set(10_in,127);
+  chassis.pid_wait();
+  distanceReset(y);
+  pros::delay(50);
+  chassis.pid_odom_set({{118_in, 110_in}, fwd, 127});
+  chassis.pid_wait();
+  chassis.pid_turn_set(90_deg, 127);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{118_in, 131_in}, fwd,127});
+  wings.set(true);
+  edge();
+  chassis.pid_odom_set({{118_in, 110_in}, rev,127});
+  chassis.pid_wait();
+  chassis.pid_odom_set({{131_in, 96_in}, rev,127});
+  chassis.pid_wait_quick();
+  chassis.pid_odom_set({{131_in, 85_in}, rev,127});
+  chassis.pid_wait_quick();
+  chassis.pid_odom_set({{131_in, 29_in}, rev,127});
+  chassis.pid_wait();
+  chassis.pid_odom_set({{118_in, 30_in}, rev,127});
+  chassis.pid_wait();
+  chassis.pid_odom_set({{118_in, 39_in}, rev,127});
+  chassis.pid_wait();
+  wings.set(false);
+  pros::delay(1800);
+  chassis.pid_odom_set({{118_in, 13_in}, fwd,127});
+  wings.set(true); 
+  edge();
+  chassis.pid_odom_set({{118_in, 39_in}, rev,127}); 
+  chassis.pid_wait();
+  wings.set(false);
+  distanceReset(x);
+  pros::delay(1800);
+  
+  chassis.pid_odom_set({{107_in, 22_in}, fwd,127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{100_in, 12_in}, fwd,127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{88_in, 9_in}, fwd,127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{70_in, 8_in}, fwd,127});
+  chassis.pid_wait();
+
 }
 
 void blueColorSort() {

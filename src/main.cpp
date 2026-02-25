@@ -60,7 +60,7 @@ void initialize() {
    ez::as::auton_selector.autons_add({
 
    
-    
+    {"Skills+", autonSkillsplus},
     {"Skills", autonSkills}, 
     {"Park Only", parkOnly},
     {"PID", drive_example},
