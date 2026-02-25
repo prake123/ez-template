@@ -4,6 +4,7 @@ void default_constants();
 
 
 void autonSkills();
+void autonSkillsplus();
 void matchRight();
 void testAuton();
 void matchLeft();
