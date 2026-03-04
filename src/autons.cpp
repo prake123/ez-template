@@ -333,14 +333,14 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   middleIntake.move(127);
   bottomIntake.move(127);
   chassis.pid_wait();
-  chassis.pid_odom_set({{19.5_in, 34_in}, fwd, 80});
+  chassis.pid_odom_set({{19.5_in, 35_in}, fwd, 80});
   chassis.pid_wait();
   chassis.pid_turn_set(90_deg, 127);
-  pros::delay(1000);
+  pros::delay(500);
   edge();
   pros::delay(200);
   chassis.pid_wait();
-  chassis.pid_odom_set({{0_in, 35_in,-90_deg}, rev, 90});
+  chassis.pid_drive_set(-19_in,90);
   chassis.pid_wait();
   topIntake.move(0);
   middleIntake.move(0);
@@ -466,7 +466,7 @@ void autonSkillsplus(){
   middleIntake.move(127); 
   topIntake.move(-127);
   wings.set(true);
-  chassis.pid_drive_set(30_in,127);
+  chassis.pid_drive_set(80_in,127);
   chassis.pid_wait();
   distanceReset(y);
   pros::delay(50);
