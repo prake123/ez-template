@@ -13,10 +13,10 @@ extern Drive chassis;
  inline pros::Motor bottomIntake(7);
  inline ez::Piston scraper('G');
  inline pros::Motor middleIntake(-15);
- inline pros::MotorGroup leftMotors({ -2, 11, -12});
- inline pros::MotorGroup rightMotors({4, -14, 13} );
+ inline pros::MotorGroup leftMotors({-2, 11, -12}); // NOT USED
+ inline pros::MotorGroup rightMotors({4, -14, 13}); // NOT USED
  inline ez::Piston intakeLift('E');  
- inline pros ::Optical optical ( 8 );
+ inline pros::Optical optical(8);
  inline pros::Distance distancesensor(3);
  inline pros::Distance left_distance(3);
  inline pros::Distance right_distance(4);
