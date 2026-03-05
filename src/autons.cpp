@@ -317,7 +317,6 @@ void parkOnly(){
 void edge(){
   chassis.pid_wait_quick();
   wings.set(true);
-  distanceReset(x);
   chassis.pid_drive_set(-5_in,127);
   chassis.pid_wait_quick();
   chassis.pid_drive_set(7_in, 127);
@@ -348,11 +347,11 @@ void autonSkills() {//needs to be tuned for alignment and changed in future for 
   scraper.set(false);
   chassis.pid_odom_set({{-10_in, 20_in}, fwd, 120});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-97_in, 20_in}, fwd, 120});
+  chassis.pid_odom_set({{-90_in, 20_in}, fwd, 120});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-97_in, 34_in}, fwd, 90});
+  chassis.pid_odom_set({{-90_in, 34_in}, fwd, 90});
   chassis.pid_wait();
-  chassis.pid_odom_set({{-74_in, 34_in}, rev, 90});//moving to other side and scoring
+  chassis.pid_odom_set({{-73_in, 34_in}, rev, 90});//moving to other side and scoring
   chassis.pid_wait();
   wings.set(false);
   scraper.set(true);

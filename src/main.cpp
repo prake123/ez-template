@@ -405,7 +405,7 @@ void opcontrol() {
     else if (master.get_digital(DIGITAL_DOWN)){
       intakeLift.set(true);
       bottomIntake.move(-127);
-      topIntake.move(127); 
+      //topIntake.move(127); 
       middleIntake.move(-127);
     }
     else if(master.get_digital(DIGITAL_L1)){
@@ -426,7 +426,7 @@ void opcontrol() {
     }
     else if (master.get_digital(DIGITAL_L2)) {
     intakeLift.set(true);
-    bottomIntake.move(-45);
+    bottomIntake.move(-35);
     topIntake.move(20); 
     middleIntake.move(-127);
 }  
