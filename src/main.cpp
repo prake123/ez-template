@@ -59,9 +59,8 @@ void initialize() {
   // Autonomous Selector using LLEMU
    ez::as::auton_selector.autons_add({
 
-   
-    {"Skills+", autonSkillsplus},
-    {"Skills", autonSkills}, 
+   {"Skills+", autonSkillsplus}, 
+    {"Skills", autonSkills},
     {"Park Only", parkOnly},
     {"PID", drive_example},
    
@@ -374,6 +373,12 @@ void opcontrol() {
       middleIntake.move(-127);
       bottomIntake.move(127);
       pros::delay(350);//outake before scoring
+    }
+    if(master.get_digital_new_press(DIGITAL_DOWN)){
+      topIntake.move(-127);
+      middleIntake.move(-127);
+      bottomIntake.move(127);
+      pros::delay(150);//outake before scoring
     }
     if (master.get_digital(DIGITAL_R1)) { //long macro
        
