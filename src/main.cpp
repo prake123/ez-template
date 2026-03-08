@@ -59,9 +59,8 @@ void initialize() {
   // Autonomous Selector using LLEMU
    ez::as::auton_selector.autons_add({
 
-   
-    {"Skills+", autonSkillsplus},
-    {"Skills", autonSkills}, 
+   {"Skills+", autonSkillsplus}, 
+    {"Skills", autonSkills},
     {"Park Only", parkOnly},
     {"PID", drive_example},
    
@@ -274,12 +273,22 @@ void opcontrol() {
       // wings.button_toggle(master.get_digital((DIGITAL_B)));
       // pros::delay(24); //wings and hood toggle
       
-      wings.button_toggle(master.get_digital(DIGITAL_B));
-      scraper.button_toggle(master.get_digital(DIGITAL_Y));
-      pros::delay(24); //scraper toggle
+      /*if(master.get_digital(DIGITAL_Y) || master.get_digital(DIGITAL_L1)){
+        wings.set(true);
+      }
+      else{wings.set(false);}*/
 
-      // wings.button_toggle(master.get_digital(DIGITAL_Y));
-      // pros::delay(24); 
+      if(master.get_digital(DIGITAL_RIGHT)){
+        scraper.set(true);
+      }
+      else{scraper.set(false);}
+
+      /*wings.button_toggle(master.get_digital(DIGITAL_B));
+      scraper.button_toggle(master.get_digital(DIGITAL_Y));
+      pros::delay(24); //scraper toggle*/
+
+      wings.button_toggle(master.get_digital(DIGITAL_Y));
+      pros::delay(24); 
 
       // scraper.button_toggle(master.get_digital(DIGITAL_B));
       // pros::delay(24);
@@ -365,6 +374,12 @@ void opcontrol() {
       bottomIntake.move(127);
       pros::delay(350);//outake before scoring
     }
+    if(master.get_digital_new_press(DIGITAL_DOWN)){
+      topIntake.move(-127);
+      middleIntake.move(-127);
+      bottomIntake.move(127);
+      pros::delay(150);//outake before scoring
+    }
     if (master.get_digital(DIGITAL_R1)) { //long macro
        
       bottomIntake.move(127);
@@ -377,8 +392,8 @@ void opcontrol() {
        //wings.set(false);
        intakeLift.set(false);
       bottomIntake.move(100);
-      topIntake.move(80);
-      middleIntake.move(100);
+      topIntake.move(35);
+      middleIntake.move(50);
       colorSort = true;
       middle= true;
       /*wings.set(false=-
@@ -401,11 +416,16 @@ void opcontrol() {
         topIntake.move(-20); 
         middleIntake.move(-50);
     }*/
-    } 
-    else if (master.get_digital(DIGITAL_DOWN)){
+    } else if (master.get_digital(DIGITAL_B)) { //intake macro
       intakeLift.set(false);
-      bottomIntake.move(-127);
+      bottomIntake.move(127);
       topIntake.move(127); 
+      middleIntake.move(127);
+    }
+    else if (master.get_digital(DIGITAL_DOWN)){
+      intakeLift.set(true);
+      bottomIntake.move(-127);
+      //topIntake.move(127); 
       middleIntake.move(-127);
     }
     else if(master.get_digital(DIGITAL_L1)){
@@ -414,7 +434,7 @@ void opcontrol() {
       bottomIntake.move(127);
       topIntake.move(-127); 
       middleIntake.move(127);
-      wings.set(true);
+     wings.set(true);
     //   storingActive = !storingActive;
     //   colorSort = false;
     //   if(storingActive){//storing toggle when pressing L1
@@ -426,7 +446,7 @@ void opcontrol() {
     }
     else if (master.get_digital(DIGITAL_L2)) {
     intakeLift.set(true);
-    bottomIntake.move(-45);
+    bottomIntake.move(-35);
     topIntake.move(20); 
     middleIntake.move(-127);
 }  
