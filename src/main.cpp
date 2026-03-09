@@ -4,7 +4,8 @@
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-
+const double right_sensor_offset = 3.25;  // This is the distance from the front of the robot to the center of the front distance sensor, used for odom calculations
+const double left_sensor_offset = 3.25; 
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
@@ -59,7 +60,10 @@ void initialize() {
   // Autonomous Selector using LLEMU
    ez::as::auton_selector.autons_add({
 
-   {"Skills+", autonSkillsplus}, 
+    {"swing",swing_example},
+    {"barriercross", barriercross},
+
+    {"Skills+", autonSkillsplus}, 
     {"Skills", autonSkills},
     {"Park Only", parkOnly},
     {"PID", drive_example},
@@ -259,7 +263,21 @@ void opcontrol() {
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_vel+-9885ocity());
   pros::lcd::print(6, "Lebron");
-  master.print(0, 0, "X: %.2f Y: %.2f", chassis.odom_x_get(), chassis.odom_y_get());
+  // master.print(0, 0, "X: %.2f Y: %.2f", chassis.odom_x_get(), chassis.odom_y_get());
+  // // show raw distance sensor values (inches)
+  // master.print(1, 0, "L: %.2f R: %.2f",
+  //              left_distance.get() / 25.4 + left_sensor_offset,
+  //              right_distance.get() / 25.4 + right_sensor_offset);
+
+  // manual resets for testing
+  if (master.get_digital_new_press(DIGITAL_A)) {
+    distanceReset("x");
+    master.print(1,0,"after opcontrol reset x -> %.2f\n", chassis.odom_x_get());
+  }
+  if (master.get_digital_new_press(DIGITAL_B)) {
+    distanceReset("y");
+    master.print(0,0,"after opcontrol reset y -> %.2f\n", chassis.odom_y_get());
+  }
     //chassis.opcontrol_tank();  // Tank control
      //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade

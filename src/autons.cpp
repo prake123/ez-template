@@ -118,11 +118,42 @@ void drive_and_turn() {
 ///
 // Swing Example
 ///
-
-
+void swing_example() {  
+scraper.set(false);
+chassis.pid_swing_set(ez::LEFT_SWING, 45_deg,120,40);
+chassis.pid_wait_quick_chain();
+chassis.pid_drive_set(20_in, 127);
+chassis.pid_wait_quick_chain();
+chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,40);
+chassis.pid_wait_quick_chain();
+// chassis.pid_drive_set(5_in, 127);
+// chassis.pid_wait();
+// chassis.pid_drive_set(-5_in, 127);
+chassis.pid_wait();
+wings.set(true);
+topIntake.move(-127);
+middleIntake.move(127);
+bottomIntake.move(127);
+chassis.pid_drive_set(12_in, 100);
+chassis.pid_wait_quick_chain();
+chassis.pid_drive_set(47_in,80);
+pros::delay(800);
+scraper.set(true);
+chassis.pid_wait();
+distanceReset(y);
+chassis.pid_turn_relative_set(90_deg, 120);
+chassis.pid_wait_quick();
+chassis.pid_drive_set(-7_in,90);
+chassis.pid_wait();
+distanceReset(x);
+chassis.pid_drive_set(5_in,90);
+chassis.pid_wait();
+chassis.pid_odom_set({{-42_in, 40_in}, fwd, 90});
+chassis.pid_wait();
+}
 ///
 // Motion Chaining
-///
+/// 
 
 
 ///
@@ -283,9 +314,7 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
-//distance reset for odom
-//to reset y axis you have to face sideways, and to reset x axis you have to face forwards.
-void distanceReset(string axis, const double field_length = 144.0){
+void distanceReset(std::string axis, const double field_length = 144.0){
   double x,y;
   if(axis == "x"){
     double left = left_distance.get()/25.4 + left_sensor_offset;
@@ -304,7 +333,16 @@ void distanceReset(string axis, const double field_length = 144.0){
     chassis.odom_xyt_set(chassis.odom_x_get(), y, chassis.odom_theta_get());
   }
 }
-
+void distancetest(){
+  chassis.pid_drive_set(10_in, 127);
+  chassis.pid_wait();
+  distanceReset(x);
+  chassis.pid_turn_set(90_deg, 127);
+  chassis.pid_wait();
+  distanceReset(y);
+  chassis.pid_odom_set({{0_in, 0_in}, fwd, 127});
+  chassis.pid_wait();
+}
 
 void parkOnly(){
   chassis.pid_wait_quick();
@@ -657,6 +695,26 @@ void autonSkillsplus(){
   chassis.pid_odom_set({{70_in, 8_in}, fwd,127});
   chassis.pid_wait();
 */
+}
+
+void barriercross(){
+  chassis.pid_odom_set({{0_in, 14_in}, fwd, 127});
+  chassis.pid_wait();
+  chassis.pid_turn_set(45,90);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{1_in, 20_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{4_in, 25_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{9_in, 30_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_wait_quick_chain();
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{16_in, 34_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
+  chassis.pid_wait_quick_chain();
+  chassis.pid_odom_set({{29_in, 35_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
 }
 //incomplete - just 92 rn
 void autonSkillsplus114(){
