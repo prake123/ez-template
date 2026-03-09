@@ -627,42 +627,43 @@ chassis.pid_turn_relative_set(90_deg, 120);
 chassis.pid_wait_quick();
 chassis.pid_drive_set(-7_in,90);
 chassis.pid_wait();
-distanceReset(x);
+distanceReset(x);//still at wall after crossing
 scraper.set(false);
-chassis.pid_odom_set({{33_in, 35_in,180_deg}, fwd, 90});
+chassis.pid_odom_set({{33_in, 35_in,180_deg}, fwd, 90});//moving towards middle 
 chassis.pid_wait();
-chassis.pid_turn_set(135_deg, 90);
+chassis.pid_turn_set(135_deg, 90);//turning towards middle
 chassis.pid_wait();
-chassis.pid_odom_set({{60_in, 60_in}, rev, 90});
+chassis.pid_odom_set({{60_in, 60_in}, rev, 90});//at middle
 topIntake.move(127);
 middleIntake.move(-127);
-bottomIntake.move(-127);
+bottomIntake.move(-127);//anti jam
 pros::delay(100);
 topIntake.move(127);
-middleIntake.move(127);
+middleIntake.move(127);//scoring middle
 bottomIntake.move(127);
 pros::delay(800);
 chassis.pid_wait();
-chassis.pid_drive_set(-10_in, 127);
+chassis.pid_drive_set(-10_in, 127);//moving away from middle
 chassis.pid_wait();
 chassis.pid_turn_relative_set(180_deg, 127);
 chassis.pid_wait();
-chassis.pid_odom_set({{24_in, 24_in}, fwd, 127});
+chassis.pid_odom_set({{24_in, 24_in}, fwd, 127});//aligning to loader
+chassis.pid_wait();
 chassis.pid_turn_set(0_deg, 127);
 scraper.set(true);
 chassis.pid_wait();
-chassis.pid_odom_set({{9_in, 23_in}, fwd, 127});
+chassis.pid_odom_set({{9_in, 23_in}, fwd, 127});//scraping
 chassis.pid_wait();
 topIntake.move(-127);
 middleIntake.move(127);
 bottomIntake.move(127);
 wings.set(true);
-edge();
+edge();//im edging
   chassis.pid_odom_set({{24_in, 27_in}, rev, 127});
   chassis.pid_wait_quick_chain();
   chassis.pid_odom_set({{15_in, 34_in}, rev, 127});
   chassis.pid_wait_quick_chain();
-  chassis.pid_odom_set({{12_in, 44_in}, rev, 127});
+  chassis.pid_odom_set({{12_in, 44_in}, rev, 127});//SUPER BAD PLEASE CHANGE BRO
   chassis.pid_wait_quick_chain();
   chassis.pid_odom_set({{12_in, 56_in}, rev, 127});
   chassis.pid_wait_quick_chain();
@@ -674,21 +675,21 @@ edge();
   chassis.pid_odom_set({{24_in, 100_in}, rev, 127});
   chassis.pid_wait();
   wings.set(false);
-  pros::delay(1800);
+  pros::delay(1800);//scoring at long goal
   pros::delay(50);
   chassis.pid_odom_set({{25_in, 129_in}, fwd, 127});
   chassis.pid_wait();
   wings.set(true);
-  edge();
+  edge();//im edging it deep
   chassis.pid_odom_set({{24_in, 100_in}, rev, 127});
   chassis.pid_wait();
   wings.set(false);
-  pros::delay(1800);
+  pros::delay(1800);//i score blocks
   chassis.pid_wait();
   chassis.pid_swing_set(ez::LEFT_SWING, 45_deg,120,40);
 chassis.pid_wait_quick_chain();
 chassis.pid_drive_set(20_in, 127);
-chassis.pid_wait_quick_chain();
+chassis.pid_wait_quick_chain();//amazing praket swing movements
 chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,40);
 chassis.pid_wait_quick_chain();
 chassis.pid_wait();
@@ -697,7 +698,7 @@ topIntake.move(-127);
 middleIntake.move(127);
 bottomIntake.move(127);
 chassis.pid_drive_set(12_in, 100);//barrier cross curves
-chassis.pid_wait_quick_chain();
+chassis.pid_wait_quick_chain();//park SHOULD be able to clear park zone
 chassis.pid_drive_set(10_in,80);
 pros::delay(800);
 scraper.set(true);
