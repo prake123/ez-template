@@ -319,13 +319,13 @@ void distanceReset(std::string axis, const double field_length = 144.0){
   if(axis == "x"){
     double left = left_distance.get()/25.4 + left_sensor_offset;
     double right = right_distance.get()/25.4 + right_sensor_offset;
-    x = (left+field_length-right);
+    x = (left);
     chassis.odom_xyt_set(x, chassis.odom_y_get(), chassis.odom_theta_get());
   }
   else if(axis == "y"){
     double left = left_distance.get()/25.4 + left_sensor_offset;
     double right = right_distance.get()/25.4 + right_sensor_offset;
-    y = (left+field_length-right);
+    y = (left);
     chassis.odom_xyt_set(chassis.odom_x_get(), y, chassis.odom_theta_get());
   }
 }
