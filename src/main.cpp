@@ -59,17 +59,12 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
    ez::as::auton_selector.autons_add({
-
+    {"Skills+", autonSkillsplus}, 
     {"swing",swing_example},
     {"barriercross", barriercross},
-
-    {"Skills+", autonSkillsplus}, 
     {"Skills", autonSkills},
     {"Park Only", parkOnly},
     {"PID", drive_example},
-   
-         
-
     });
 
   // Initialize chassis and auton selector
