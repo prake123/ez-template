@@ -59,7 +59,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
    ez::as::auton_selector.autons_add({
-    {"Skills+", autonSkillsplus}, 
+    // {"Skills+", autonSkillsplus}, 
     {"swing",swing_example},
     {"barriercross", barriercross},
     {"Skills", autonSkills},
@@ -257,22 +257,16 @@ void opcontrol() {
   // pros::lcd::print(0, "Left B RPM: %.2f", bottomLeft.get_actual_velocity()); 
   // pros::lcd::print(1, "Left M RPM: %.2f", middleLeft.get_actual_velocity());
   // pros::lcd::print(2, "Left T RPM: %.2f", topLeft.get_actual_vel+-9885ocity());
-  pros::lcd::print(6, "Lebron");
-  // master.print(0, 0, "X: %.2f Y: %.2f", chassis.odom_x_get(), chassis.odom_y_get());
-  // // show raw distance sensor values (inches)
-  // master.print(1, 0, "L: %.2f R: %.2f",
-  //              left_distance.get() / 25.4 + left_sensor_offset,
-  //              right_distance.get() / 25.4 + right_sensor_offset);
+  pros::lcd::print(8, "Lebron");
+  pros::lcd::print(4, "X: %.2f Y: %.2f", chassis.odom_x_get(), chassis.odom_y_get());
+  // show raw distance sensor values (inches)
+  pros::lcd::print(5, "L: %.2f R: %.2f",
+               left_distance.get() / 25.4 + left_sensor_offset,
+               right_distance.get() / 25.4 + right_sensor_offset);
 
   // manual resets for testing
-  if (master.get_digital_new_press(DIGITAL_A)) {
-    distanceReset("x");
-    master.print(1,0,"after opcontrol reset x -> %.2f\n", chassis.odom_x_get());
-  }
-  if (master.get_digital_new_press(DIGITAL_B)) {
-    distanceReset("y");
-    master.print(0,0,"after opcontrol reset y -> %.2f\n", chassis.odom_y_get());
-  }
+    master.print(4,0, "X: %.2f Y: %.2f", chassis.odom_x_get(), chassis.odom_y_get());
+
     //chassis.opcontrol_tank();  // Tank control
      //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
@@ -291,10 +285,7 @@ void opcontrol() {
       }
       else{wings.set(false);}*/
 
-      if(master.get_digital(DIGITAL_RIGHT)){
-        scraper.set(true);
-      }
-      else{scraper.set(false);}
+      scraper.button_toggle(master.get_digital(DIGITAL_RIGHT));
 
       /*wings.button_toggle(master.get_digital(DIGITAL_B));
       scraper.button_toggle(master.get_digital(DIGITAL_Y));

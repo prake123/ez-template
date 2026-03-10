@@ -19,4 +19,4 @@ extern Drive chassis;
  inline pros::Optical optical(8);
  inline pros::Distance distancesensor(3);
  inline pros::Distance left_distance(10);
- inline pros::Distance right_distance(4);
+ inline pros::Distance right_distance(21);

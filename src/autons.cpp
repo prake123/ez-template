@@ -120,39 +120,61 @@ void drive_and_turn() {
 ///
 void swing_example() {  
 scraper.set(false);
-chassis.pid_swing_set(ez::LEFT_SWING, 45_deg,120,40);
-chassis.pid_wait_quick_chain();
-chassis.pid_drive_set(20_in, 127);
-chassis.pid_wait_quick_chain();
-chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,40);
-chassis.pid_wait_quick_chain();
+  chassis.pid_swing_set(ez::LEFT_SWING, 45_deg,120,40);
+  chassis.pid_wait_quick_chain();
+  chassis.pid_drive_set(20_in, 127);
+  chassis.pid_wait_quick_chain();
+  chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,40);
+  chassis.pid_wait_quick_chain();
 // chassis.pid_drive_set(5_in, 127);
 // chassis.pid_wait();
 // chassis.pid_drive_set(-5_in, 127);
-chassis.pid_wait();
+chassis.pid_wait_quick();
 wings.set(true);
 topIntake.move(-127);
 middleIntake.move(127);
 bottomIntake.move(127);
-chassis.pid_drive_set(12_in, 100);
+chassis.pid_drive_set(12_in, 100);//barrier cross curves
 chassis.pid_wait_quick_chain();
 chassis.pid_drive_set(47_in,80);
 pros::delay(800);
 scraper.set(true);
 chassis.pid_wait();
-distanceReset(y);
+chassis.pid_drive_set(-15_in,70);
+chassis.pid_wait();
 chassis.pid_turn_relative_set(90_deg, 120);
 chassis.pid_wait_quick();
 chassis.pid_drive_set(-7_in,90);
 chassis.pid_wait();
-distanceReset(x);
-chassis.pid_drive_set(5_in,90);
+scraper.set(false);
+chassis.odom_xyt_set(36, 127,chassis.odom_theta_get());
 chassis.pid_wait();
-chassis.pid_odom_set({{-42_in, 40_in}, fwd, 90});
+chassis.pid_odom_set({{36_in, 81_in}, fwd, 90});//moving towards middle
+pros::delay(800);
+scraper.set(true);
+chassis.pid_wait();
+chassis.pid_turn_set(45_deg, 120);
+chassis.pid_wait_quick();
+chassis.pid_drive_set(-9_in,90);
+chassis.pid_wait();
+topIntake.move(127);
+middleIntake.move(-127);
+bottomIntake.move(127);
+pros::delay(800);
+chassis.pid_odom_set({{64_in, 100_in}, fwd, 90});//moving towards middle
+chassis.pid_wait();
+chassis.pid_turn_set(0,90);
+chassis.pid_wait();
+scraper.set(true);
+topIntake.move(-127);
+middleIntake.move(127);
+bottomIntake.move(127);
+wings.set(true);
+chassis.pid_odom_set({{64_in, 124_in}, fwd, 90});//moving towards middle
 chassis.pid_wait();
 }
 ///
-// Motion Chaining
+// Motion Chaining 
 /// 
 
 
@@ -321,12 +343,14 @@ void distanceReset(std::string axis, const double field_length){
     double right = right_distance.get()/25.4 + right_sensor_offset;
     x = (left);
     chassis.odom_xyt_set(x, chassis.odom_y_get(), chassis.odom_theta_get());
+    master.print(6, 0, "x reset -> %.2f\n", chassis.odom_x_get());
   }
   else if(axis == "y"){
     double left = left_distance.get()/25.4 + left_sensor_offset;
     double right = right_distance.get()/25.4 + right_sensor_offset;
     y = (left);
     chassis.odom_xyt_set(chassis.odom_x_get(), y, chassis.odom_theta_get());
+
   }
 }
 
@@ -650,12 +674,12 @@ chassis.pid_drive_set(47_in,80);
 pros::delay(800);
 scraper.set(true);
 chassis.pid_wait();
-distanceReset(y);//in front of loader
+chassis.pid_drive_set(-15_in,70);
+chassis.pid_wait();
 chassis.pid_turn_relative_set(90_deg, 120);
 chassis.pid_wait_quick();
 chassis.pid_drive_set(-7_in,90);
 chassis.pid_wait();
-distanceReset(x);//still at wall after crossing
 scraper.set(false);
 chassis.pid_odom_set({{33_in, 35_in,180_deg}, fwd, 90});//moving towards middle 
 chassis.pid_wait();
