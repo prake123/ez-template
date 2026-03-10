@@ -31,3 +31,4 @@ void barriercross();
 void swing_example();
 void distancetest();
 void distanceReset(std::string axis, const double field_length = 144.0);
+void edge();

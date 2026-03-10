@@ -124,7 +124,7 @@ scraper.set(false);
   chassis.pid_wait_quick_chain();
   chassis.pid_drive_set(20_in, 127);
   chassis.pid_wait_quick_chain();
-  chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,40);
+  chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,43);
   chassis.pid_wait_quick_chain();
 // chassis.pid_drive_set(5_in, 127);
 // chassis.pid_wait();
@@ -149,7 +149,7 @@ chassis.pid_wait();
 scraper.set(false);
 chassis.odom_xyt_set(36, 127,chassis.odom_theta_get());
 chassis.pid_wait();
-chassis.pid_odom_set({{36_in, 81_in}, fwd, 90});//moving towards middle
+chassis.pid_odom_set({{36_in, 85_in}, fwd, 90});//moving towards middle
 pros::delay(800);
 scraper.set(true);
 chassis.pid_wait();
@@ -158,10 +158,10 @@ chassis.pid_wait_quick();
 chassis.pid_drive_set(-9_in,90);
 chassis.pid_wait();
 topIntake.move(127);
-middleIntake.move(-127);
+middleIntake.move(127);
 bottomIntake.move(127);
 pros::delay(800);
-chassis.pid_odom_set({{64_in, 100_in}, fwd, 90});//moving towards middle
+chassis.pid_odom_set({{64_in, 107_in}, fwd, 90});//moving towards middle
 chassis.pid_wait();
 chassis.pid_turn_set(0,90);
 chassis.pid_wait();
@@ -170,8 +170,49 @@ topIntake.move(-127);
 middleIntake.move(127);
 bottomIntake.move(127);
 wings.set(true);
-chassis.pid_odom_set({{64_in, 124_in}, fwd, 90});//moving towards middle
+chassis.pid_odom_set({{64_in, 124_in}, fwd, 90});//at loader
 chassis.pid_wait();
+topIntake.move(-127);
+edge();
+chassis.pid_odom_set({{64_in, 120_in}, rev, 90});//at long goal
+chassis.pid_wait();
+scraper.set(false);
+wings.set(false);
+chassis.pid_wait();
+chassis.pid_odom_set({{82_in, 115_in}, rev, 90});
+chassis.pid_wait();
+chassis.pid_turn_set(0, 120);
+chassis.pid_wait();
+chassis.pid_odom_set({{82_in, 15_in}, rev, 90});
+chassis.pid_wait();
+chassis.pid_odom_set({{69_in, 13_in}, rev, 90});
+chassis.pid_wait();
+chassis.pid_odom_set({{69_in, 34_in}, rev, 90});
+chassis.pid_wait();
+wings.set(false);
+pros::delay(1000);
+scraper.set(true);
+chassis.pid_odom_set({{69_in, 5_in}, fwd, 90});
+edge();
+chassis.pid_wait();
+chassis.pid_odom_set({{69_in, 34_in}, rev, 90});
+chassis.pid_wait();       
+scraper.set(false);
+  chassis.pid_swing_set(ez::LEFT_SWING, 45_deg,120,40);
+  chassis.pid_wait_quick_chain();
+  chassis.pid_drive_set(20_in, 127);
+  chassis.pid_wait_quick_chain();
+  chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,43);
+  chassis.pid_wait_quick_chain();
+// chassis.pid_drive_set(5_in, 127);
+// chassis.pid_wait();
+// chassis.pid_drive_set(-5_in, 127);
+chassis.pid_wait_quick();
+wings.set(true);
+topIntake.move(-127);
+middleIntake.move(127);
+bottomIntake.move(127);
+chassis.pid_drive_set(12_in, 100);//barrier cross curves                                                                   
 }
 ///
 // Motion Chaining 
@@ -658,12 +699,12 @@ void autonSkillsplus(){
   chassis.pid_wait_quick_chain();
   chassis.pid_drive_set(20_in, 127);
   chassis.pid_wait_quick_chain();
-  chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,40);
+  chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,43);
   chassis.pid_wait_quick_chain();
 // chassis.pid_drive_set(5_in, 127);
 // chassis.pid_wait();
 // chassis.pid_drive_set(-5_in, 127);
-chassis.pid_wait();
+chassis.pid_wait_quick();
 wings.set(true);
 topIntake.move(-127);
 middleIntake.move(127);
@@ -681,11 +722,72 @@ chassis.pid_wait_quick();
 chassis.pid_drive_set(-7_in,90);
 chassis.pid_wait();
 scraper.set(false);
-chassis.pid_odom_set({{33_in, 35_in,180_deg}, fwd, 90});//moving towards middle 
+chassis.odom_xyt_set(36, 127,chassis.odom_theta_get());
 chassis.pid_wait();
-chassis.pid_turn_set(135_deg, 90);//turning towards middle
+chassis.pid_odom_set({{36_in, 85_in}, fwd, 90});//moving towards middle
+pros::delay(800);
+scraper.set(true);
 chassis.pid_wait();
-chassis.pid_odom_set({{60_in, 60_in}, rev, 90});//at middle
+chassis.pid_turn_set(45_deg, 120);
+chassis.pid_wait_quick();
+chassis.pid_drive_set(-12_in,90);
+chassis.pid_wait();
+topIntake.move(90);
+middleIntake.move(90);
+bottomIntake.move(90);
+pros::delay(800);
+chassis.pid_odom_set({{64_in, 107_in}, fwd, 90});//moving towards middle
+chassis.pid_wait();
+chassis.pid_turn_set(0,90);
+chassis.pid_wait();
+scraper.set(true);
+topIntake.move(-127);
+middleIntake.move(127);
+bottomIntake.move(127);
+wings.set(true);
+chassis.pid_odom_set({{64_in, 124_in}, fwd, 90});//at loader
+chassis.pid_wait();
+topIntake.move(-127);
+edge();
+chassis.pid_odom_set({{64_in, 120_in}, rev, 90});//at long goal
+chassis.pid_wait();
+scraper.set(false);
+wings.set(false);
+chassis.pid_wait();
+chassis.pid_odom_set({{82_in, 115_in}, rev, 90});
+chassis.pid_wait();
+chassis.pid_turn_set(0, 120);
+chassis.pid_wait();
+chassis.pid_odom_set({{82_in, 15_in}, rev, 90});
+chassis.pid_wait();
+chassis.pid_odom_set({{69_in, 13_in}, rev, 90});
+chassis.pid_wait();
+chassis.pid_odom_set({{69_in, 34_in}, rev, 90});
+chassis.pid_wait();
+wings.set(false);
+pros::delay(1000);
+scraper.set(true);
+chassis.pid_odom_set({{69_in, 5_in}, fwd, 90});
+edge();
+chassis.pid_wait();
+chassis.pid_odom_set({{69_in, 34_in}, rev, 90});
+chassis.pid_wait();       
+scraper.set(false);
+  chassis.pid_swing_set(ez::LEFT_SWING, 45_deg,120,40);
+  chassis.pid_wait_quick_chain();
+  chassis.pid_drive_set(20_in, 127);
+  chassis.pid_wait_quick_chain();
+  chassis.pid_swing_set(ez::LEFT_SWING, 90_deg,120,43);
+  chassis.pid_wait_quick_chain();
+// chassis.pid_drive_set(5_in, 127);
+// chassis.pid_wait();
+// chassis.pid_drive_set(-5_in, 127);
+chassis.pid_wait_quick();
+wings.set(true);
+topIntake.move(-127);
+middleIntake.move(127);
+bottomIntake.move(127);
+chassis.pid_drive_set(12_in, 100);//barrier cross curves 
 /*topIntake.move(127);
 middleIntake.move(-127);
 bottomIntake.move(-127);//anti jam
