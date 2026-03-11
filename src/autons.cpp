@@ -377,7 +377,7 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
-void distanceReset(std::string axis, const double field_length){
+/*void distanceReset(std::string axis, const double field_length){
   double x,y;
   if(axis == "x"){
     double left = left_distance.get()/25.4 + left_sensor_offset;
@@ -393,7 +393,7 @@ void distanceReset(std::string axis, const double field_length){
     chassis.odom_xyt_set(chassis.odom_x_get(), y, chassis.odom_theta_get());
 
   }
-}
+}*/
 
 void distancetest(){
   chassis.pid_drive_set(10_in, 127);
@@ -580,8 +580,8 @@ void autonSkillsplus(){
   chassis.pid_turn_relative_set(-20_deg, 127);
   chassis.pid_wait();
   chassis.pid_odom_set({{-7_in, 27_in}, fwd, 127});
-  scraper.set(true);
   chassis.pid_wait_quick();
+  scraper.set(true);
 
   // go to middle
 
