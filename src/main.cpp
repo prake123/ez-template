@@ -284,6 +284,9 @@ void opcontrol() {
       scraper.button_toggle(master.get_digital(DIGITAL_Y));
       pros::delay(24); //scraper toggle
 
+      middleDescore.button_toggle(master.get_digital(DIGITAL_RIGHT));
+      pros::delay(24); //scraper toggle
+
       // wings.button_toggle(master.get_digital(DIGITAL_Y));
       // pros::delay(24); 
 

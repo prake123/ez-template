@@ -18,3 +18,4 @@ extern Drive chassis;
  inline ez::Piston doublePark('E');  
  inline pros::Optical optical(8);
  inline pros::Distance distancesensor(3);
+ inline ez::Piston middleDescore('F');
