@@ -360,10 +360,10 @@ void opcontrol() {
     if(master.get_digital_new_press(DIGITAL_R1)){
       wings.set(false);
       intakeLift.set(false);
-      topIntake.move(40);
-      middleIntake.move(-40);
-      bottomIntake.move(-40);
-      pros::delay(90);//outake before scoring
+      topIntake.move(127);
+      middleIntake.move(-127);
+      bottomIntake.move(-127);
+      pros::delay(100);//outake before scoring
     }
     if(master.get_digital_new_press(DIGITAL_R2)){
       //wings.set(false);
