@@ -21,6 +21,7 @@ void skillsawp();
 void long4middle3left();
 void long4middle3right();
 void sawp();
+void sawpPush();
 void long7Right();
 void long7Left();
 void jank();

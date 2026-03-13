@@ -59,6 +59,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+    {"SAWPush", sawpPush},
     {"SoloAWP", sawp}, 
     {"long+middle right", long4middle3right}, 
     {"long+middle left", long4middle3left}, 
