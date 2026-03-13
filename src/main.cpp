@@ -59,10 +59,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-
+    {"SoloAWP", sawp}, 
     {"long+middle right", long4middle3right}, 
     {"long+middle left", long4middle3left}, 
-    {"SoloAWP", sawp}, 
     {"LongRight", long7Right}, 
     {"LongLeft", long7Left},
     {"Right Wing Rush", wingRushRight},  

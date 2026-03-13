@@ -528,10 +528,10 @@ void long4middle3right() {//lowkey goated auton
 
   
 void sawp(){//works pretty well try not to change anything
-  
+  middleDescore.set(false);
   chassis.pid_wait_quick();
   doublePark.set(false);
-  chassis.pid_odom_set({{0_in, 34_in},fwd, 127});
+  chassis.pid_odom_set({{0_in, 36_in},fwd, 127});
   scraper.set(true);
   wings.set(true);
   chassis.pid_wait_quick();
@@ -540,10 +540,10 @@ void sawp(){//works pretty well try not to change anything
   middleIntake.move(127);
   bottomIntake.move(127);
   chassis.pid_wait_quick();
-  chassis.pid_odom_set({{17.1_in, 34_in}, fwd, 80});//at match loader
+  chassis.pid_odom_set({{17.1_in, 36_in}, fwd, 70});//at match loader
   pros::delay(1050);
   wings.set(true);
-  chassis.pid_odom_set({{-20_in, 34.5_in}, rev, 127});//long goal
+  chassis.pid_odom_set({{-20_in, 36_in}, rev, 127});//long goal
   
   topIntake.move(-127);
   middleIntake.move(127);
@@ -553,11 +553,61 @@ void sawp(){//works pretty well try not to change anything
  
   scraper.set(false);
   //chassis.pid_wait();
-  wings.set(false);
   pros::delay(1300);
-  chassis.pid_odom_set({{{-3_in, 36.3_in}, fwd, 127},
-                       {{-30.5_in, 3.5_in}, fwd, 90}});//scrape balls
-        
+  chassis.pid_turn_relative_set(95,127);
+  chassis.pid_wait_quick();
+  chassis.pid_odom_set({{-18_in, 25_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
+  wings.set(true);
+  scraper.set(true);
+  chassis.pid_odom_set({{-20_in, 14_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
+  scraper.set(false);
+  chassis.pid_odom_set({{-22_in, -22_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
+  scraper.set(true);
+  chassis.pid_odom_set({{-20_in, -29_in}, fwd, 127});
+  chassis.pid_wait();
+  chassis.pid_turn_set(-225, 127);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{-31_in, -20.5_in}, rev, 127});
+  chassis.pid_wait();
+
+  topIntake.move(-127);
+  middleIntake.move(-127);
+  bottomIntake.move(-127);
+  pros::delay(200);
+
+  topIntake.move(127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+  pros::delay(700);
+
+  // move blocks out of middle intake
+
+  topIntake.move(-127);
+  middleIntake.move(-127);
+  bottomIntake.move(-127);
+  pros::delay(200);
+
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
+
+  chassis.pid_odom_set({{7.5_in, -59_in}, fwd, 127});
+  chassis.pid_wait_quick();
+  chassis.pid_turn_relative_set(-40, 127);
+  chassis.pid_wait_quick();
+  chassis.pid_odom_set({{17.1_in, -59_in}, fwd, 127});
+  chassis.pid_wait();
+  pros::delay(100); // idk why it waits so long here; i put 100
+  chassis.pid_odom_set({{-14_in, -59_in}, rev, 127});
+  chassis.pid_wait();
+  wings.set(false);
+  pros::delay(10000);
+/*
+  chassis.pid_drive_set(72_in,127);
+  chassis.pid_wait();
   wings.set(true);
   topIntake.move(-127); 
   middleIntake.move(127);
@@ -568,7 +618,6 @@ void sawp(){//works pretty well try not to change anything
   scraper.set(false);
    
   chassis.pid_wait();
-  chassis.pid_odom_set({{-25_in, -41_in}, fwd, 127});//scrap more balls
   //add scraper to hold balls here
   pros::delay(1320);
 
@@ -578,7 +627,7 @@ void sawp(){//works pretty well try not to change anything
   chassis.pid_turn_set(-220_deg, 127);//turn to middle
   chassis.pid_wait_quick(); 
   // chassis.pid_odom_set({{-39.1_in, -30.2_in}, rev, 127});//go to middle used to be -38.6,-29.2
-  chassis.pid_drive_set(-16.2_in, 127); // changed from -15
+  chassis.pid_drive_set(-22_in, 127); // changed from -15
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-2_in, 127);
   topIntake.move(127);
@@ -591,7 +640,8 @@ void sawp(){//works pretty well try not to change anything
   pros::delay(300);
   topIntake.move(0);
   middleIntake.move(0);
-  bottomIntake.move(0);
+  bottomIntake.move(0);*/
+/*
   chassis.pid_odom_set({{{0_in, -65_in}, fwd, 127}});//go towards match loader
   topIntake.move(-127);
   middleIntake.move(-127);
@@ -623,7 +673,8 @@ void sawp(){//works pretty well try not to change anything
   middleIntake.move(127);
   topIntake.move(-127);
   chassis.pid_wait();
-  pros::delay(10000);
+  pros::delay(10000);*/
+  
 }
 void long7Right(){ //does not currently work needs fixing
   wings.set(true);
