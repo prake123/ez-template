@@ -618,9 +618,9 @@ void sawpPush(){//works pretty well try not to change anything
   chassis.pid_drive_set(10_in, 127);
   chassis.pid_wait_quick_chain();
   chassis.pid_odom_set({{0.8_in, 36_in},rev, 127});
-  scraper.set(true);
   chassis.pid_wait_quick();
   chassis.pid_turn_relative_set(-90,127);
+  scraper.set(true);
   topIntake.move(-127);
   middleIntake.move(127);
   bottomIntake.move(127);
@@ -628,6 +628,9 @@ void sawpPush(){//works pretty well try not to change anything
   chassis.pid_odom_set({{17.1_in, 36_in}, fwd, 60});//at match loader
   pros::delay(1000);
   wings.set(true);
+  topIntake.move(100);
+  middleIntake.move(-100);
+  bottomIntake.move(-100);
   chassis.pid_odom_set({{-20_in, 36_in}, rev, 127});//long goal
   
   topIntake.move(-127);
@@ -654,8 +657,15 @@ void sawpPush(){//works pretty well try not to change anything
   chassis.pid_odom_set({{-20_in, -29_in}, fwd, 127});
   chassis.pid_wait();
   chassis.pid_turn_set(-225, 127);
+  topIntake.move(127);
+  middleIntake.move(-127);
+  bottomIntake.move(-127);
+  pros::delay(100);
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-31_in, -20.5_in}, rev, 127});
+  chassis.pid_odom_set({{-30.5_in, -20.5_in}, rev, 127});
   chassis.pid_wait();
 
   topIntake.move(-127);
@@ -679,14 +689,22 @@ void sawpPush(){//works pretty well try not to change anything
   middleIntake.move(127);
   bottomIntake.move(127);
 
-  chassis.pid_odom_set({{7.5_in, -59_in}, fwd, 127});
+  chassis.pid_odom_set({{7.5_in, -58_in}, fwd, 127});
   chassis.pid_wait_quick();
   chassis.pid_turn_relative_set(-40, 127);
   chassis.pid_wait_quick();
-  chassis.pid_odom_set({{17.1_in, -59_in}, fwd, 127});
+  chassis.pid_odom_set({{17.5_in, -58_in}, fwd, 127});
   chassis.pid_wait();
-  pros::delay(100); // idk why it waits so long here; i put 100
+  pros::delay(100); 
+  // idk why it waits so long here; i put 100
   chassis.pid_odom_set({{-14_in, -59_in}, rev, 127});
+  topIntake.move(80);
+  middleIntake.move(-80);
+  bottomIntake.move(-80);
+  pros::delay(200);
+  topIntake.move(-127);
+  middleIntake.move(127);
+  bottomIntake.move(127);
   chassis.pid_wait();
   wings.set(false);
   pros::delay(10000);
