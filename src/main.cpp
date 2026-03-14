@@ -59,6 +59,7 @@ void initialize() {
 
   // Autonomous Selector us,ing LLEMU
    ez::as::auton_selector.autons_add({
+    {"Middle",middle},
     {"Skills+", autonSkillsplus}, 
     {"skills114", autonSkillsplus114},
     {"swing",swing_example},
