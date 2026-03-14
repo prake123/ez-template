@@ -406,6 +406,24 @@ void distancetest(){
   chassis.pid_wait();
 }
 
+void middle(){
+  topIntake.move(127);
+middleIntake.move(-127);
+bottomIntake.move(-127);
+pros::delay(200);
+
+//scoring middle
+
+bottomIntake.move(127);
+topIntake.move(90);
+middleIntake.move(100);
+pros::delay(1000);
+
+bottomIntake.move(100);
+topIntake.move(35);
+middleIntake.move(50);
+pros::delay(1000);
+}
 void parkOnly(){
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-16_in, 127);
@@ -580,8 +598,10 @@ void autonSkillsplus(){
   chassis.pid_turn_relative_set(-20_deg, 127);
   chassis.pid_wait();
   chassis.pid_odom_set({{-7_in, 27_in}, fwd, 127});
-  chassis.pid_wait_quick();
+  pros::delay(350);
   scraper.set(true);
+  chassis.pid_wait_quick();
+  
 
   // go to middle
 
@@ -602,7 +622,7 @@ void autonSkillsplus(){
   bottomIntake.move(127);
   topIntake.move(90);
   middleIntake.move(100);
-  pros::delay(500);
+  pros::delay(400);
 
   // make sure no blocks are stuck in middle intake
 
@@ -625,12 +645,16 @@ void autonSkillsplus(){
   chassis.pid_wait();
   chassis.pid_odom_set({{-32_in, -9_in}, fwd, 127});
   chassis.pid_wait();
-  pros::delay(500);
+  pros::delay(700);
   edge();
 
   // going to other side
 
   chassis.pid_odom_set({{-32_in, 4_in}, rev, 127});
+  topIntake.move(0);
+  middleIntake.move(0);
+  bottomIntake.move(0);
+  wings.set(false);
   chassis.pid_wait();
   chassis.pid_turn_relative_set(-45_deg, 127);
   chassis.pid_wait();
@@ -646,7 +670,7 @@ void autonSkillsplus(){
   chassis.pid_wait();
   chassis.pid_turn_set(0,90);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-35_in, 81_in}, rev, 127});
+  chassis.pid_odom_set({{-36_in, 79_in}, rev, 127});
   chassis.pid_wait();
 
   //score long goal
@@ -668,6 +692,8 @@ void autonSkillsplus(){
   // scraping
 
   wings.set(true);
+  chassis.pid_odom_set({{-35_in, 116_in}, fwd, 127});
+  chassis.pid_wait_quick_chain();
   chassis.pid_odom_set({{-35_in, 120_in}, fwd, 70});
   edge();
   pros::delay(500);
@@ -675,7 +701,7 @@ void autonSkillsplus(){
 
   // scoring long goal
 
-  chassis.pid_odom_set({{-35_in, 82_in}, rev, 70});
+  chassis.pid_odom_set({{-36_in, 82_in}, rev, 70});
   chassis.pid_wait();
 
   wings.set(false);
@@ -711,7 +737,7 @@ bottomIntake.move(127);
 chassis.pid_drive_set(12_in, 100);//barrier cross curves
 chassis.pid_wait_quick_chain();
 chassis.pid_drive_set(47_in,80);
-pros::delay(800);
+pros::delay(900);
 scraper.set(true);
 chassis.pid_wait();
 chassis.pid_drive_set(-15_in,70);
@@ -723,13 +749,13 @@ chassis.pid_wait();
 scraper.set(false);
 chassis.odom_xyt_set(36, 127,chassis.odom_theta_get());
 chassis.pid_wait();
-chassis.pid_odom_set({{36_in, 82.5_in}, fwd, 90});//moving towards middle
+chassis.pid_odom_set({{36_in, 86.5_in}, fwd, 90});//moving towards middle
 pros::delay(800);
 scraper.set(true);
 chassis.pid_wait();
 chassis.pid_turn_set(45_deg, 120);
 chassis.pid_wait_quick();
-chassis.pid_drive_set(-15_in,90);
+chassis.pid_drive_set(-17_in,90);
 chassis.pid_wait();
 
 // anti-jam
@@ -744,20 +770,23 @@ pros::delay(200);
 bottomIntake.move(127);
 topIntake.move(90);
 middleIntake.move(100);
-pros::delay(2000);
+pros::delay(600);
 
-bottomIntake.move(100);
+bottomIntake.move(80);
 topIntake.move(35);
 middleIntake.move(50);
-pros::delay(1000);
+pros::delay(2000);
 
 // make sure no blocks are stuck in middle intake
 
 bottomIntake.move(-127);
 middleIntake.move(-127); 
 topIntake.move(-127);
-pros::delay(400);
-
+pros::delay(200);
+topIntake.move(-127);
+middleIntake.move(127);
+bottomIntake.move(127);
+wings.set(true);
 chassis.pid_odom_set({{64_in, 107_in}, fwd, 90});//moving towards middle??? i dont think so
 chassis.pid_wait();
 chassis.pid_turn_set(0,90);
@@ -768,25 +797,31 @@ middleIntake.move(127);
 bottomIntake.move(127);
 
 wings.set(true);
+
 chassis.pid_odom_set({{64_in, 124_in}, fwd, 90});//at loader
 chassis.pid_wait();
 pros::delay(500);
 edge();
 
-chassis.pid_odom_set({{64_in, 120_in}, rev, 90});
+chassis.pid_odom_set({{64_in, 120_in}, rev, 120});
 chassis.pid_wait();
+topIntake.move(0);
+middleIntake.move(0);
+bottomIntake.move(0);
+wings.set(false);
 //scraper.set(false);
 //wings.set(false);
 chassis.pid_wait();
-chassis.pid_odom_set({{82_in, 115_in}, rev, 90});
-chassis.pid_wait();
+chassis.pid_odom_set({{82_in, 115_in}, rev, 120});
+chassis.pid_wait_quick();
+scraper.set(false);
 chassis.pid_turn_set(0, 120);
-chassis.pid_wait();
-chassis.pid_odom_set({{82_in, 15_in}, rev, 90});
-chassis.pid_wait();
-chassis.pid_odom_set({{69_in, 13_in}, rev, 90});
-chassis.pid_wait();
-chassis.pid_odom_set({{69_in, 35_in}, rev, 90});
+chassis.pid_wait_quick();
+chassis.pid_odom_set({{82_in, 20_in}, rev, 120});
+chassis.pid_wait_quick();
+chassis.pid_odom_set({{69_in, 20_in}, rev, 120});
+chassis.pid_wait_quick();
+chassis.pid_odom_set({{71_in, 35_in}, rev, 120});
 chassis.pid_wait();
 
 wings.set(false);//at long goal
@@ -804,11 +839,11 @@ pros::delay(2000);
 
 scraper.set(true);
 chassis.pid_odom_set({{69_in, 5_in}, fwd, 90});
-pros::delay(500);
+pros::delay(1100);
 edge();
 
 chassis.pid_wait();
-chassis.pid_odom_set({{69_in, 34_in}, rev, 70});
+chassis.pid_odom_set({{72_in, 34_in}, rev, 70});
 
 wings.set(false);//at long goal
 
@@ -832,11 +867,12 @@ chassis.pid_wait_quick_chain();
 chassis.pid_swing_set(ez::LEFT_SWING, -90_deg,120,43);
 chassis.pid_wait_quick_chain();
 wings.set(true);
+pros::delay(1000);
 scraper.set(true);
 topIntake.move(-127);
 middleIntake.move(127);
 bottomIntake.move(127);
-chassis.pid_drive_set(12_in, 127);//barrier cross curves 
+chassis.pid_drive_set(15_in, 127);//barrier cross curves 
 chassis.pid_wait();
 scraper.set(false);
 pros::delay(10000);
